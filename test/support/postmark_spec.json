@@ -1,0 +1,65 @@
+{
+ "Attachments": [
+    {
+     "Content": "[BASE64]",
+     "ContentType": "image\/png",
+     "Name": "myimage.png"
+    },
+    {
+     "Content": "[BASE64]",
+     "ContentType": "application\/msword",
+     "Name": "mypaper.doc"
+    }
+ ],
+ "Cc": "",
+ "From": "\"My User\" <user@email.com>",
+ "Headers": [
+    {
+     "Name": "MIME-Version",
+     "Value": "1.0"
+    },
+    {
+     "Name": "Date",
+     "Value": "Thu, 24 Mar 2011 15:59:30 -0400"
+    },
+    {
+     "Name": "Subject",
+     "Value": "Welcome to Postmark"
+    },
+    {
+     "Name": "From",
+     "Value": "user@email.com"
+    },
+    {
+     "Name": "To",
+     "Value": "451d9b70cf9364d23ff6f9d51d870251569e+ahoy@inbound.postmarkapp.com"
+    },
+    {
+     "Name": "Content-Type",
+     "Value": "multipart\/mixed"
+    },
+    {
+      "X-Spam-Checker-Version": "SpamAssassin 3.3.1 (2010-03-16) on rs-mail1"
+    },
+    {
+      "X-Spam-Status": "No"
+    },
+    {
+      "X-Spam-Score": "-0.8"
+    },
+    {
+      "X-Spam-Tests": "DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_LOW"
+    },
+    {
+      "Received-SPF": "Pass (sender SPF authorized) identity=mailfrom; client-ip=209.85.160.42; helo=mail-pw0-f42.google.com; envelope-from=support@postmarkapp.com; receiver=451d9b70cf9364d23ff6f9d51d870251569e+ahoy@inbound.postmarkapp.com "
+    }
+ ],
+ "HtmlBody": "[HTML(encoded)]",
+ "MailboxHash": "ahoy",
+ "MessageID": "22c74902-a0c1-4511-804f2-341342852c90",
+ "ReplyTo": "",
+ "Subject": "This is an inbound message",
+ "Tag": "",
+ "TextBody": "[ASCII]",
+ "To": "451d9b70cf9364d23ff6f9d51d870251569e+ahoy@inbound.postmarkapp.com"
+}
