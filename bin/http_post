@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+require 'mailkit'
+require 'net/http'
+require 'uri'
+require 'openssl'
+require 'securerandom'
+require 'optparse'
+
+options = {
+  config: ((ENV['PWD'] and File.join(ENV['PWD'], 'config', 'initializers', 'mailkit.rb')) or nil)
+}
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: http_post [options]"
+  opts.on('-c', '--config [mailkit-config.rb]') {|c| options[:config] = c }
+  
+  opts.parse!
+end
+
+unless (options[:config] && File.exists?(options[:config]))
+  puts("Config file not found. Please supply a valid config file.")
+  exit
+end
+
+require options[:config]
+
+url = URI.parse(Mailkit.config.http_post_endpoint)
+
+timestamp = Time.now.to_i
+token = SecureRandom.hash
+signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), Mailkit.config.secret, [timestamp, token].join)
+
+data = { :message => STDIN.read, :timestamp => timestamp, :token => token, :signature => signature }
+headers = {}
+
+req = Net::HTTP::Post.new(url.path, headers)
+req.form_data = data
+req.basic_auth url.user, url.password if url.user
+
+resp, data = Net::HTTP.new(url.host, url.port).start {|http|
+  http.request(req)
+}
+
+puts resp.body

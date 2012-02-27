@@ -9,7 +9,11 @@ class TestStrategy < ActiveSupport::TestCase
     object.expects(:authenticate).with(options).once.returns(true)
     object.expects(:receive).once
     
-    Mailkit::Strategy.expects(:new).with(*args).returns(object)
-    Mailkit::Strategy.receive(options, *args)
+    class Strategy
+      include Mailkit::Strategy
+    end
+    
+    Strategy.expects(:new).with(*args).returns(object)
+    Strategy.receive(options, *args)
   end
 end
