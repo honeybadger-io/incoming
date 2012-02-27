@@ -1,5 +1,7 @@
 source "http://rubygems.org"
 
+gem 'rails', '3.2.1'
+
 # Declare your gem's dependencies in mailkit.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.

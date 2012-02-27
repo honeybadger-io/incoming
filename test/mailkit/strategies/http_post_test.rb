@@ -23,18 +23,18 @@ class TestHTTPPost < ActiveSupport::TestCase
     assert(http_post.body =~ /Reply ABOVE THIS LINE/, 'Body should include reply instructions')
   end
 
-  test 'returns false from #receive when hexidigest is invalid' do
+  test 'returns false from #authenticate when hexidigest is invalid' do
     OpenSSL::HMAC.expects(:hexdigest).returns('bar')
 
     http_post = Mailkit::Strategies::HTTPPost.new(@mock_request)
-    assert(http_post.receive == false, 'should return false for invalid signature')
+    assert(http_post.authenticate == false, 'should return false for invalid signature')
   end
 
-  test 'does not return false from #receive when hexidigest is valid' do
+  test 'does not return false from #authenticate when hexidigest is valid' do
     OpenSSL::HMAC.expects(:hexdigest).returns('foo')
 
     http_post = Mailkit::Strategies::HTTPPost.new(@mock_request)
-    assert(http_post.receive != false, 'should not return false for valid signature')
+    assert(http_post.authenticate != false, 'should not return false for valid signature')
   end
 
 end

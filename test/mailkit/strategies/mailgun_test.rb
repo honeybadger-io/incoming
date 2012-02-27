@@ -24,18 +24,18 @@ class TestMailgun < ActiveSupport::TestCase
     assert_equal(@params['body-plain'], mailgun.body)
   end
 
-  test 'it returns false from #receive when hexidigest is invalid' do
+  test 'it returns false from #authenticate when hexidigest is invalid' do
     OpenSSL::HMAC.expects(:hexdigest).returns('bar')
 
     mailgun = Mailkit::Strategies::Mailgun.new(@mock_request)
-    assert(mailgun.receive == false, 'should return false for invalid signature')
+    assert(mailgun.authenticate == false, 'should return false for invalid signature')
   end
 
-  test 'it does not return false from #receive when hexidigest is valid' do
+  test 'it does not return false from #authenticate when hexidigest is valid' do
     OpenSSL::HMAC.expects(:hexdigest).returns('foo')
 
     mailgun = Mailkit::Strategies::Mailgun.new(@mock_request)
-    assert(mailgun.receive != false, 'should not return false for valid signature')
+    assert(mailgun.authenticate != false, 'should not return false for valid signature')
   end
 
 end

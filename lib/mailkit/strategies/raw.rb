@@ -1,4 +1,5 @@
 require 'mms2r'
+require 'mail'
 
 module Mailkit
   module Strategies
@@ -7,8 +8,8 @@ module Mailkit
 
       attr_accessor :signature, :token, :timestamp
 
-      def initialize(mail)
-        mail = Mailkit::Mailer.receive(mail)
+      def initialize(raw_mail)
+        mail = Mail.new(raw_mail)
 
         @to = mail.to.first
         @from = mail.from.first

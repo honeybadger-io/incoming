@@ -4,7 +4,6 @@ PATH
     mailkit (0.0.1)
       mms2r (~> 3.6.0)
       postmark-mitt (~> 0.0.5)
-      rails (~> 3.0)
 
 GEM
   remote: http://rubygems.org/
@@ -113,4 +112,5 @@ DEPENDENCIES
   jquery-rails
   mailkit!
   mocha
+  rails (= 3.2.1)
   sqlite3

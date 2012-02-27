@@ -17,10 +17,11 @@ module Mailkit
         @timestamp = params[:timestamp]
       end
 
-      def receive
-        hexdigest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), Mailkit.config.api_key, [timestamp, token].join)
+      def authenticate(options = {})
+        api_key = options.delete(:api_key)
+        
+        hexdigest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), api_key, [timestamp, token].join)
         return false unless hexdigest.eql?(signature)
-        super
       end
     end
   end
