@@ -30,11 +30,11 @@ class TestHTTPPost < ActiveSupport::TestCase
     assert(http_post.authenticate == false, 'should return false for invalid signature')
   end
 
-  test 'does not return false from #authenticate when hexidigest is valid' do
+  test 'returns true from #authenticate when hexidigest is valid' do
     OpenSSL::HMAC.expects(:hexdigest).returns('foo')
 
     http_post = Mailkit::Strategies::HTTPPost.new(@mock_request)
-    assert(http_post.authenticate != false, 'should not return false for valid signature')
+    assert(http_post.authenticate == true, 'should return true for valid signature')
   end
 
 end

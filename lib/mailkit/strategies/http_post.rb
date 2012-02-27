@@ -15,7 +15,7 @@ module Mailkit
 
       def authenticate(options = {})
         hexdigest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), Mailkit.config.secret, [timestamp, token].join)
-        hexdigest.eql?(signature) or return false
+        hexdigest.eql?(signature) or false
       end
     end
   end

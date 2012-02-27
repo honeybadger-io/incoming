@@ -21,7 +21,7 @@ module Mailkit
         api_key = options.delete(:api_key)
         
         hexdigest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), api_key, [timestamp, token].join)
-        return false unless hexdigest.eql?(signature)
+        hexdigest.eql?(signature) or false
       end
     end
   end

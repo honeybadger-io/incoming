@@ -31,11 +31,11 @@ class TestMailgun < ActiveSupport::TestCase
     assert(mailgun.authenticate == false, 'should return false for invalid signature')
   end
 
-  test 'it does not return false from #authenticate when hexidigest is valid' do
+  test 'returns true from #authenticate when hexidigest is valid' do
     OpenSSL::HMAC.expects(:hexdigest).returns('foo')
 
     mailgun = Mailkit::Strategies::Mailgun.new(@mock_request)
-    assert(mailgun.authenticate != false, 'should not return false for valid signature')
+    assert(mailgun.authenticate == true, 'should return true for valid signature')
   end
 
 end
