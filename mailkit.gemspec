@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   
   s.executables << 'http_post'
   
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE", "Rakefile", "README.markdown"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "postmark-mitt", "~> 0.0.5"
