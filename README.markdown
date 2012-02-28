@@ -21,7 +21,7 @@ result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com w
 
 ```ruby
 class EmailReceiver < Mailkit::Strategies::Mailgun
-  default_options api_key: 'asdf'
+  setup api_key: 'asdf'
 
   def receive
     puts %(Got message from #{to} with subject "#{subject}")
@@ -30,4 +30,32 @@ end
 
 req = Rack::Request.new(env)
 result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com with subject "hello world"
+```
+
+## HTTP Post example:
+
+```ruby
+# mailkit-config.rb
+Mailkit.setup do |config|
+  config.http_post_secret = '6d7e5337a0cd69f52c3fcf9f5af438b1'
+  config.http_post_endpoint = 'http://your-domain.com/emails'
+end
+```
+
+```ruby
+require_relative 'mailkit-config'
+
+class EmailReceiver < Mailkit::Strategies::HTTPPost
+  def receive
+    puts %(Got message from #{to} with subject "#{subject}")
+  end
+end
+
+req = Rack::Request.new(env)
+result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com with subject "hello world"
+```
+
+```
+# Postfix virtual alias
+rails_mailer: "|mail_handler -c /path/to/mailkit-config.rb"
 ```
