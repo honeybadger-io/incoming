@@ -4,7 +4,7 @@ Mailkit Gem
 Mailkit helps you receive email from several popular service providers
 using various methods (mainly HTTP post hooks.)
 
-## Sendgrid:
+## Sendgrid example:
 
 ```ruby
 class EmailReceiver < Mailkit::Strategies::Sendgrid
@@ -16,6 +16,8 @@ end
 req = Rack::Request.new(env)
 result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com with subject "hello world"
 ```
+
+## Mailgun example:
 
 ```ruby
 class EmailReceiver < Mailkit::Strategies::Mailgun
