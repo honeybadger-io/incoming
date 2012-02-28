@@ -18,7 +18,7 @@ module Mailkit
   protected
   def self.default_config
     {
-      secret: nil,
+      http_post_secret: nil,
       http_post_endpoint: nil
     }
   end

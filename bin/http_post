@@ -28,7 +28,7 @@ url = URI.parse(Mailkit.config.http_post_endpoint)
 
 timestamp = Time.now.to_i
 token = SecureRandom.hash
-signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), Mailkit.config.secret, [timestamp, token].join)
+signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), Mailkit.config.http_post_secret, [timestamp, token].join)
 
 data = { :message => STDIN.read, :timestamp => timestamp, :token => token, :signature => signature }
 headers = {}

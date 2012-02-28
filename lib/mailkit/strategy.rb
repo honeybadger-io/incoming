@@ -1,3 +1,5 @@
+require 'ostruct'
+
 module Mailkit
   module Strategy
     def self.included(base)
@@ -6,19 +8,28 @@ module Mailkit
     
     module ClassMethods
       # Global receiver
-      def receive(options = {}, *args)
+      def receive(*args)
         email = new(*args)
-        email.options(options)
         email.authenticate and email.receive
       end
+      
+      # Strategy-specific options
+      def options
+        @options ||= OpenStruct.new(default_options)
+      end
 
-      # Accepts a hash that overrides any existing default option values
-      # Returns default options hash
-      def default_options(options = {})
-        @default_options ||= {}
-        @default_options.reverse_merge!(options)
-
-        @default_options
+      # Yields options for configuration
+      def setup(options = {})
+        if block_given?
+          yield(options)
+        else
+          @options = OpenStruct.new(default_options.merge(options))
+        end
+      end
+      
+      protected
+      def default_options
+        {}
       end
     end
 
@@ -30,15 +41,6 @@ module Mailkit
     # Authenticates request before performing #receive
     def authenticate
       true
-    end
-    
-    # Accepts a hash that overrides any existing option values
-    # Returns options hash
-    def options(options = {})
-      @options ||= self.class.default_options
-      @options.reverse_merge!(options)
-
-      @options
     end
     
     protected
