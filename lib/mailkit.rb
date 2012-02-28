@@ -12,6 +12,14 @@ module Mailkit
   end
 
   def self.config
-    @config ||= OpenStruct.new
+    @config ||= OpenStruct.new(default_config)
+  end
+
+  protected
+  def self.default_config
+    {
+      secret: nil,
+      http_post_endpoint: nil
+    }
   end
 end
