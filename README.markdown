@@ -57,5 +57,5 @@ result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com w
 
 ```
 # Postfix virtual alias
-rails_mailer: "|mail_handler -c /path/to/mailkit-config.rb"
+mailkit_http_post: "|http_post -c /path/to/mailkit-config.rb"
 ```
