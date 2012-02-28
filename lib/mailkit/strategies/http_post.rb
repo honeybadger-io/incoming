@@ -13,7 +13,7 @@ module Mailkit
         super(params.delete(:message))
       end
 
-      def authenticate(options = {})
+      def authenticate
         hexdigest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), Mailkit.config.secret, [timestamp, token].join)
         hexdigest.eql?(signature) or false
       end

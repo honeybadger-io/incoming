@@ -17,6 +17,8 @@ module Mailkit
 
         media = MMS2R::Media.new(mail)
         @body = media.body
+        
+        super
       end
     end
   end

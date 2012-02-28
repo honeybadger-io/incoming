@@ -13,6 +13,8 @@ module Mailkit
         @subject = email.subject
         @body = email.text_body
         @attachments = email.attachments
+        
+        super
       end
     end
   end

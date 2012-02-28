@@ -11,6 +11,8 @@ module Mailkit
         @from = envelope['from']
         @subject = params[:subject]
         @body = params[:text]
+        
+        super
       end
     end
   end

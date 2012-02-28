@@ -8,18 +8,37 @@ module Mailkit
       # Global receiver
       def receive(options = {}, *args)
         email = new(*args)
-        email.authenticate(options) and email.receive
+        email.options(options)
+        email.authenticate and email.receive
+      end
+
+      # Accepts a hash that overrides any existing default option values
+      # Returns default options hash
+      def default_options(options = {})
+        @default_options ||= {}
+        @default_options.reverse_merge!(options)
+
+        @default_options
       end
     end
-    
+
     attr_accessor :to, :from, :subject, :body, :attachments
 
     # Translates arguments into standard setter/getter methods
     def initialize(*args) ; end
     
     # Authenticates request before performing #receive
-    def authenticate(options = {})
+    def authenticate
       true
+    end
+    
+    # Accepts a hash that overrides any existing option values
+    # Returns options hash
+    def options(options = {})
+      @options ||= self.class.default_options
+      @options.reverse_merge!(options)
+
+      @options
     end
     
     protected

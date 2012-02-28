@@ -6,7 +6,8 @@ class TestStrategy < ActiveSupport::TestCase
     options = {foo: 'bar'}
     
     object = mock()
-    object.expects(:authenticate).with(options).once.returns(true)
+    object.expects(:options).with(options).once
+    object.expects(:authenticate).once.returns(true)
     object.expects(:receive).once
     
     class Strategy
