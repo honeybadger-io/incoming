@@ -7,11 +7,11 @@ require "mailkit/version"
 Gem::Specification.new do |s|
   s.name        = "mailkit"
   s.version     = Mailkit::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Mailkit."
-  s.description = "TODO: Description of Mailkit."
+  s.authors     = ["Joshua Wood"]
+  s.email       = ["josh@hintmedia.com"]
+  s.homepage    = "http://joshuawood.net/"
+  s.summary     = "Standardizes various mail parse apis."
+  s.description = "Standardizes various mail parse apis."
 
   s.executables << 'http_post'
 
