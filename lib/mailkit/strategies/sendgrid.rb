@@ -12,7 +12,6 @@ module Mailkit
           from params[:from]
           to envelope['to'].first
           subject params[:subject]
-          set_envelope envelope
 
           body params[:text]
 
