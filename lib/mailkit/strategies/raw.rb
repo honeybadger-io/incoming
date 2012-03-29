@@ -1,4 +1,3 @@
-require 'mms2r'
 require 'mail'
 
 module Mailkit
@@ -15,9 +14,13 @@ module Mailkit
         @from = mail.from.first
         @subject = mail.subject
 
-        media = MMS2R::Media.new(mail)
-        @body = media.body
-        
+        if mail.multipart?
+          @text = mail.text_part
+          @html = mail.html_part
+        else
+          @text = mail.body.decoded
+        end
+
         super
       end
     end

@@ -2,7 +2,6 @@ PATH
   remote: .
   specs:
     mailkit (0.0.1)
-      mms2r (~> 3.6.0)
       postmark-mitt (~> 0.0.5)
 
 GEM
@@ -38,7 +37,6 @@ GEM
     arel (3.0.2)
     builder (3.0.0)
     erubis (2.7.0)
-    exifr (1.1.1)
     hike (1.2.1)
     i18n (0.6.0)
     journey (1.0.3)
@@ -53,15 +51,9 @@ GEM
       treetop (~> 1.4.8)
     metaclass (0.0.1)
     mime-types (1.17.2)
-    mms2r (3.6.0)
-      exifr (>= 1.0.3)
-      mail (>= 2.2.10)
-      nokogiri (>= 1.4.4)
-      uuidtools (>= 2.1.1)
     mocha (0.10.4)
       metaclass (~> 0.0.1)
     multi_json (1.1.0)
-    nokogiri (1.5.0)
     polyglot (0.3.3)
     postmark-mitt (0.0.5)
       json_pure
@@ -103,7 +95,6 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.31)
-    uuidtools (2.1.2)
 
 PLATFORMS
   ruby

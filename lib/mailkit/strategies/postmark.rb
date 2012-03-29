@@ -11,9 +11,10 @@ module Mailkit
         @to = email.to
         @from = email.from_email
         @subject = email.subject
-        @body = email.text_body
+        @text = email.text_body
+        @html = email.html_body
         @attachments = email.attachments
-        
+
         super
       end
     end

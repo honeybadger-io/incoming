@@ -17,7 +17,7 @@ module Mailkit
         hexdigest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), self.class.options.http_post_secret, [timestamp, token].join)
         hexdigest.eql?(signature) or false
       end
-      
+
       protected
       def default_options
         Mailkit.config

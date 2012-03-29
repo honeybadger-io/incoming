@@ -5,14 +5,14 @@ module Mailkit
     def self.included(base)
       base.extend ClassMethods
     end
-    
+
     module ClassMethods
       # Global receiver
       def receive(*args)
         email = new(*args)
         email.authenticate and email.receive
       end
-      
+
       # Strategy-specific options
       def options
         @options ||= OpenStruct.new(default_options)
@@ -26,23 +26,29 @@ module Mailkit
           @options = OpenStruct.new(default_options.merge(options))
         end
       end
-      
+
       protected
       def default_options
         {}
       end
     end
 
-    attr_accessor :to, :from, :subject, :body, :attachments
+    attr_accessor :to, :from, :subject, :text, :html, :attachments
 
     # Translates arguments into standard setter/getter methods
     def initialize(*args) ; end
-    
+
     # Authenticates request before performing #receive
     def authenticate
       true
     end
-    
+
+    # TODO: strip html
+    # Returns text body if present, or plain text version of html body
+    def body
+      text or html
+    end
+
     protected
     # Evaluates message and performs appropriate action
     # Override in subclass

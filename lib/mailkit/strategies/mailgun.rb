@@ -11,21 +11,22 @@ module Mailkit
         @to = params[:recipient]
         @from = params[:sender]
         @subject = params[:subject]
-        @body = params['body-plain']
+        @text = params['body-plain']
+        @html = params['body-html']
         @signature = params[:signature]
         @token = params[:token]
         @timestamp = params[:timestamp]
-        
+
         super
       end
 
       def authenticate
         api_key = self.class.options.api_key
-        
+
         hexdigest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), api_key, [timestamp, token].join)
         hexdigest.eql?(signature) or false
       end
-      
+
       protected
       def default_options
         {

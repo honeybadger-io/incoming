@@ -8,10 +8,11 @@ module Mailkit
         envelope = JSON.parse(params[:envelope])
 
         @to = envelope['to'].first
-        @from = envelope['from']
+        @from = params[:from]
         @subject = params[:subject]
-        @body = params[:text]
-        
+        @text = params[:text]
+        @html = params[:html]
+
         super
       end
     end

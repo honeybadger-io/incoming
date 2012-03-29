@@ -12,14 +12,13 @@ Gem::Specification.new do |s|
   s.homepage    = "TODO"
   s.summary     = "TODO: Summary of Mailkit."
   s.description = "TODO: Description of Mailkit."
-  
+
   s.executables << 'http_post'
-  
+
   s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE", "Rakefile", "README.markdown"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "postmark-mitt", "~> 0.0.5"
-  s.add_dependency "mms2r", "~> 3.6.0"
 
   s.add_development_dependency "sqlite3"
 end
