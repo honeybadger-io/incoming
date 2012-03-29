@@ -52,7 +52,7 @@ GEM
       treetop (~> 1.4.8)
     metaclass (0.0.1)
     mime-types (1.17.2)
-    mocha (0.10.4)
+    mocha (0.10.5)
       metaclass (~> 0.0.1)
     multi_json (1.1.0)
     polyglot (0.3.3)

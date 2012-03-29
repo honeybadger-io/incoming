@@ -1,3 +1,4 @@
+require 'mail'
 require 'ostruct'
 require 'mailkit/strategy'
 require 'mailkit/strategies/raw'

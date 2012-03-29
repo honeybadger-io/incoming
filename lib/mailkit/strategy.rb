@@ -9,8 +9,8 @@ module Mailkit
     module ClassMethods
       # Global receiver
       def receive(*args)
-        email = new(*args)
-        email.authenticate and email.receive
+        strategy = new(*args)
+        strategy.authenticate and strategy.receive(strategy.message)
       end
 
       # Strategy-specific options
@@ -33,7 +33,7 @@ module Mailkit
       end
     end
 
-    attr_accessor :to, :from, :subject, :text, :html, :attachments
+    attr_accessor :message
 
     # Translates arguments into standard setter/getter methods
     def initialize(*args) ; end
@@ -41,12 +41,6 @@ module Mailkit
     # Authenticates request before performing #receive
     def authenticate
       true
-    end
-
-    # TODO: strip html
-    # Returns text body if present, or plain text version of html body
-    def body
-      text or html
     end
 
     protected

@@ -7,13 +7,19 @@ module Mailkit
         params = request.params
         envelope = JSON.parse(params[:envelope])
 
-        @to = envelope['to'].first
-        @from = params[:from]
-        @subject = params[:subject]
-        @text = params[:text]
-        @html = params[:html]
+        @message = Mail.new do
+          from params[:from]
+          to envelope['to'].first
+          subject params[:subject]
+          set_envelope envelope
 
-        super
+          body params[:text]
+
+          html_part do
+            content_type 'text/html; charset=UTF-8'
+            body params[:html]
+          end if params[:html]
+        end
       end
     end
   end

@@ -1,8 +1,7 @@
 require 'test_helper'
 
-class TestHTTPPost < ActiveSupport::TestCase
-
-  def setup
+describe Mailkit::Strategies::HTTPPost do
+  before do
     raw_email = File.open(File.expand_path("../../../support/notification.eml",  __FILE__)).read
 
     params = {
@@ -14,27 +13,28 @@ class TestHTTPPost < ActiveSupport::TestCase
     @mock_request.expects(:params).returns(params)
   end
 
-  test 'it parses email to correct attributes' do
+  it 'it parses email to correct attributes' do
     http_post = Mailkit::Strategies::HTTPPost.new(@mock_request)
 
-    assert_equal('josh@joshuawood.net', http_post.to)
-    assert_equal('notifications@mailkit.test', http_post.from)
-    assert_equal('Jack Kerouac has replied to Test', http_post.subject)
-    assert(http_post.body =~ /Reply ABOVE THIS LINE/, 'Body should include reply instructions')
+    assert_kind_of Mail::Message, http_post.message
+
+    assert_equal 'josh@joshuawood.net', http_post.message.to[0]
+    assert_equal 'notifications@mailkit.test', http_post.message.from[0]
+    assert_equal 'Jack Kerouac has replied to Test', http_post.message.subject
+    assert_match /Reply ABOVE THIS LINE/, http_post.message.body.decoded, 'Body should include reply instructions'
   end
 
-  test 'returns false from #authenticate when hexidigest is invalid' do
+  it 'returns false from #authenticate when hexidigest is invalid' do
     OpenSSL::HMAC.expects(:hexdigest).returns('bar')
 
     http_post = Mailkit::Strategies::HTTPPost.new(@mock_request)
-    assert(http_post.authenticate == false, 'should return false for invalid signature')
+    assert http_post.authenticate == false, 'should return false for invalid signature'
   end
 
-  test 'returns true from #authenticate when hexidigest is valid' do
+  it 'returns true from #authenticate when hexidigest is valid' do
     OpenSSL::HMAC.expects(:hexdigest).returns('foo')
 
     http_post = Mailkit::Strategies::HTTPPost.new(@mock_request)
-    assert(http_post.authenticate == true, 'should return true for valid signature')
+    assert http_post.authenticate == true, 'should return true for valid signature'
   end
-
 end

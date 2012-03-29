@@ -1,3 +1,4 @@
+# http://documentation.mailgun.net/user_manual.html#receiving-messages
 module Mailkit
   module Strategies
     class Mailgun
@@ -8,16 +9,24 @@ module Mailkit
       def initialize(request)
         params = request.params
 
-        @to = params[:recipient]
-        @from = params[:sender]
-        @subject = params[:subject]
-        @text = params['body-plain']
-        @html = params['body-html']
         @signature = params[:signature]
         @token = params[:token]
         @timestamp = params[:timestamp]
 
-        super
+        @message = Mail.new do
+          headers JSON.parse params['message-headers']
+          from params[:from]
+          to params[:recipient]
+          subject params[:subject]
+
+          body params['body-plain']
+
+          html_part do
+            content_type 'text/html; charset=UTF-8'
+            body params['body-html']
+          end if params['body-html']
+
+        end
       end
 
       def authenticate
