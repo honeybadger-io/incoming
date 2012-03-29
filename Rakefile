@@ -1,3 +1,10 @@
+#!/usr/bin/env rake
+begin
+  require 'bundler/setup'
+rescue LoadError
+  puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
+end
+
 require 'rubygems'
 require 'rake'
 require 'date'
@@ -48,7 +55,7 @@ task :default => :test
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
+  test.pattern = 'test/**/*_test.rb'
   test.verbose = true
 end
 
@@ -60,7 +67,7 @@ task :coverage do
   sh "open coverage/index.html"
 end
 
-require 'rake/rdoctask'
+require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "#{name} #{version}"
@@ -79,7 +86,8 @@ end
 #
 #############################################################################
 
-
+APP_RAKEFILE = File.expand_path("../test/dummy/Rakefile", __FILE__)
+load 'rails/tasks/engine.rake'
 
 #############################################################################
 #
