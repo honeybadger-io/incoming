@@ -7,6 +7,8 @@ require 'mailkit/strategies/postmark'
 require 'mailkit/strategies/sendgrid'
 
 module Mailkit
+  VERSION = "0.0.1"
+
   def self.setup
     yield(config)
   end

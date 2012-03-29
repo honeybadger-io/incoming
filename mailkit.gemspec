@@ -1,24 +1,34 @@
-$:.push File.expand_path("../lib", __FILE__)
-
-# Maintain your gem's version:
-require "mailkit/version"
-
-# Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "mailkit"
-  s.version     = Mailkit::VERSION
-  s.authors     = ["Joshua Wood"]
-  s.email       = ["josh@hintmedia.com"]
-  s.homepage    = "http://joshuawood.net/"
+  s.specification_version = 2 if s.respond_to? :specification_version=
+  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
+  s.rubygems_version = '1.3.5'
+
+  # The following lines are updated automatically by `rake gemspec`
+  s.name              = 'mailkit'
+  s.version           = '0.0.1'
+  s.date              = '2012-03-29'
+  s.rubyforge_project = 'mailkit'
+
   s.summary     = "Standardizes various mail parse apis."
   s.description = "Standardizes various mail parse apis."
 
+  s.authors     = ["Joshua Wood"]
+  s.email       = ["josh@hintmedia.com"]
+  s.homepage    = "http://joshuawood.net/"
+
+  s.require_paths = %w[lib]
+
   s.executables << 'http_post'
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE", "Rakefile", "README.markdown"]
-  s.test_files = Dir["test/**/*"]
+  s.rdoc_options = ["--charset=UTF-8"]
+  s.extra_rdoc_files = %w[README.markdown LICENSE]
 
   s.add_dependency "postmark-mitt", "~> 0.0.5"
 
   s.add_development_dependency "sqlite3"
+
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE", "Rakefile", "README.markdown"]
+
+  s.test_files = Dir["test/**/*"]
 end
+
