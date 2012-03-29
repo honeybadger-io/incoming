@@ -8,6 +8,7 @@ module Mailkit
         envelope = JSON.parse(params[:envelope])
 
         @message = Mail.new do
+          header params[:headers]
           from params[:from]
           to envelope['to'].first
           subject params[:subject]
