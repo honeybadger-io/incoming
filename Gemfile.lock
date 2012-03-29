@@ -37,6 +37,7 @@ GEM
     arel (3.0.2)
     builder (3.0.0)
     erubis (2.7.0)
+    gemfury (0.0.1)
     hike (1.2.1)
     i18n (0.6.0)
     journey (1.0.3)
@@ -100,6 +101,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  gemfury
   jquery-rails
   mailkit!
   mocha

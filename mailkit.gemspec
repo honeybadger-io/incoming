@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency "postmark-mitt", "~> 0.0.5"
 
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "gemfury"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE", "Rakefile", "README.markdown"]
 
