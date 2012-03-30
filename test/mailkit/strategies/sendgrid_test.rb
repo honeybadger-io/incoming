@@ -20,7 +20,7 @@ describe Mailkit::Strategies::Sendgrid do
       :text => 'We should do that again sometime.',
       :html => '<strong>We should do that again sometime</strong>',
       :to => 'jack@example.com',
-      :attachments => 1,
+      :attachments => '1',
       :attachment1 => ActionDispatch::Http::UploadedFile.new({
         :filename => 'hello.txt',
         :type => 'text/plain',

@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
 
   # The following lines are updated automatically by `rake gemspec`
   s.name              = 'mailkit'
-  s.version           = '0.0.2'
+  s.version           = '0.0.3'
   s.date              = '2012-03-30'
   s.rubyforge_project = 'mailkit'
 
