@@ -35,7 +35,7 @@ module Mailkit
 
     attr_accessor :message
 
-    # Translates arguments into standard setter/getter methods
+    # Translates arguments into a Mail::Message object
     def initialize(*args) ; end
 
     # Authenticates request before performing #receive

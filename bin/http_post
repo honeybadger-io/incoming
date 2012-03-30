@@ -13,7 +13,7 @@ options = {
 OptionParser.new do |opts|
   opts.banner = "Usage: http_post [options] < input"
   opts.on('-c', '--config [mailkit-config.rb]') {|c| options[:config] = c }
-  
+
   opts.parse!
 end
 
