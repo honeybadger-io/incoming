@@ -14,6 +14,7 @@ module Mailkit
           subject params[:subject]
 
           body params[:text]
+          body.encoding = params[:charsets]['text']
 
           html_part do
             content_type 'text/html; charset=UTF-8'

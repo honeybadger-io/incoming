@@ -9,15 +9,15 @@ module Mailkit
       def initialize(request)
         params = request.params
 
-        @signature = params[:signature]
-        @token = params[:token]
-        @timestamp = params[:timestamp]
+        @signature = params['signature']
+        @token = params['token']
+        @timestamp = params['timestamp']
 
         @message = Mail.new do
-          headers JSON.parse params['message-headers']
-          from params[:from]
-          to params[:recipient]
-          subject params[:subject]
+          headers Hash[JSON.parse(params['message-headers'])]
+          from params['from']
+          to params['recipient']
+          subject params['subject']
 
           body params['body-plain']
 
@@ -25,7 +25,6 @@ module Mailkit
             content_type 'text/html; charset=UTF-8'
             body params['body-html']
           end if params['body-html']
-
         end
       end
 

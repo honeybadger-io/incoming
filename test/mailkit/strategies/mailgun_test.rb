@@ -4,13 +4,13 @@ describe Mailkit::Strategies::Mailgun do
   before do
     # TODO: use real mailgun post instead
     @params = {
-      :recipient => 'jack@example.com',
-      :sender => 'japhy@example.com',
-      :from => 'japhy@example.com',
-      :subject => 'Matterhorn',
+      'recipient' => 'jack@example.com',
+      'sender' => 'japhy@example.com',
+      'from' => 'japhy@example.com',
+      'subject' => 'Matterhorn',
       'body-plain' => 'We should do that again sometime.',
-      :signature => 'foo',
-      'message-headers' => '{}'
+      'signature' => 'foo',
+      'message-headers' => '[[]]'
     }
 
     @mock_request = mock()
@@ -20,9 +20,9 @@ describe Mailkit::Strategies::Mailgun do
   it 'it maps request parameters to correct attributes' do
     mailgun = Mailkit::Strategies::Mailgun.new(@mock_request)
 
-    assert_equal @params[:recipient], mailgun.message.to[0]
-    assert_equal @params[:sender], mailgun.message.from[0]
-    assert_equal @params[:subject], mailgun.message.subject
+    assert_equal @params['recipient'], mailgun.message.to[0]
+    assert_equal @params['sender'], mailgun.message.from[0]
+    assert_equal @params['subject'], mailgun.message.subject
     assert_equal @params['body-plain'], mailgun.message.body.decoded
   end
 
