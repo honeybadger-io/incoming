@@ -2,6 +2,10 @@ require 'test_helper'
 
 describe Mailkit::Strategies::Mailgun do
   before do
+    @tempfile = Tempfile.new('upload')
+    @tempfile.write('hello world')
+    @tempfile.rewind
+
     # TODO: use real mailgun post instead
     @params = {
       'recipient' => 'jack@example.com',
@@ -9,21 +13,34 @@ describe Mailkit::Strategies::Mailgun do
       'from' => 'japhy@example.com',
       'subject' => 'Matterhorn',
       'body-plain' => 'We should do that again sometime.',
+      'body-html' => '<strong>We should do that again sometime.</strong>',
       'signature' => 'foo',
-      'message-headers' => '[[]]'
+      'message-headers' => '{}',
+      'attachment-count' => '1',
+      'attachment-1' => ActionDispatch::Http::UploadedFile.new({
+        :filename => 'hello.txt',
+        :type => 'text/plain',
+        :tempfile => @tempfile
+      })
     }
 
     @mock_request = mock()
     @mock_request.expects(:params).returns(@params)
   end
 
-  it 'it maps request parameters to correct attributes' do
+  it 'it maps request parameters to correct attributes for non-mime request' do
     mailgun = Mailkit::Strategies::Mailgun.new(@mock_request)
+
+    assert_kind_of Mail::Message, mailgun.message
 
     assert_equal @params['recipient'], mailgun.message.to[0]
     assert_equal @params['sender'], mailgun.message.from[0]
     assert_equal @params['subject'], mailgun.message.subject
     assert_equal @params['body-plain'], mailgun.message.body.decoded
+    assert_equal @params['body-plain'], mailgun.message.text_part.body.decoded
+    assert_equal @params['body-html'], mailgun.message.html_part.body.decoded
+    assert_equal @params['attachment-1'].original_filename, mailgun.message.attachments[0].filename
+    assert_equal 'hello world', mailgun.message.attachments[0].read
   end
 
   it 'it returns false from #authenticate when hexidigest is invalid' do
@@ -39,5 +56,4 @@ describe Mailkit::Strategies::Mailgun do
     mailgun = Mailkit::Strategies::Mailgun.new(@mock_request)
     assert mailgun.authenticate == true, 'should return true for valid signature'
   end
-
 end

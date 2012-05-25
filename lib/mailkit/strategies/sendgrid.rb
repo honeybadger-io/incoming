@@ -27,7 +27,7 @@ module Mailkit
 
           1.upto(params['attachments'].to_i).each do |num|
             attachment = params["attachment#{num}"]
-            add_file :filename => attachment.original_filename, :content => attachment.read
+            add_file(:filename => attachment.original_filename, :content => attachment.read)
           end
         end
       end

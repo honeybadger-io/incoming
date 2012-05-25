@@ -25,6 +25,11 @@ module Mailkit
             content_type 'text/html; charset=UTF-8'
             body params['body-html']
           end if params['body-html']
+
+          1.upto(params['attachment-count'].to_i).each do |num|
+            attachment = params["attachment-#{num}"]
+            add_file(:filename => attachment.original_filename, :content => attachment.read)
+          end
         end
       end
 
