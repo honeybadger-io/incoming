@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.extra_rdoc_files = %w[README.markdown LICENSE]
 
+  s.add_dependency "mail",          "~> 2.4.1"
   s.add_dependency "postmark-mitt", "~> 0.0.5"
 
   s.add_development_dependency "sqlite3"

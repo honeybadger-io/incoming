@@ -1,7 +1,7 @@
 require 'test_helper'
 
 describe Mailkit::Strategies::Mailgun do
-  class MailReceiver < Mailkit::Strategies::Mailgun
+  class MailgunReceiver < Mailkit::Strategies::Mailgun
     setup do |options|
       options.api_key = 'asdf'
     end
@@ -31,7 +31,7 @@ describe Mailkit::Strategies::Mailgun do
   end
 
   it 'it maps request parameters to correct attributes for non-mime request' do
-    mailgun = MailReceiver.new(@mock_request)
+    mailgun = MailgunReceiver.new(@mock_request)
 
     assert_kind_of Mail::Message, mailgun.message
 
@@ -48,22 +48,22 @@ describe Mailkit::Strategies::Mailgun do
   it 'it returns false from #authenticate when hexidigest is invalid' do
     OpenSSL::HMAC.expects(:hexdigest).returns('bar')
 
-    mailgun = MailReceiver.new(@mock_request)
+    mailgun = MailgunReceiver.new(@mock_request)
     assert mailgun.authenticate == false, 'should return false for invalid signature'
   end
 
   it 'returns true from #authenticate when hexidigest is valid' do
     OpenSSL::HMAC.expects(:hexdigest).returns('foo')
 
-    mailgun = MailReceiver.new(@mock_request)
+    mailgun = MailgunReceiver.new(@mock_request)
     assert mailgun.authenticate == true, 'should return true for valid signature'
   end
 
   it 'raises an exception when api key is not provided' do
-    MailReceiver.class_eval { setup({ :api_key => nil }) }
+    MailgunReceiver.class_eval { setup({ :api_key => nil }) }
 
     assert_raises(Mailkit::Strategy::RequiredOptionError) do
-      MailReceiver.new(@mock_request)
+      MailgunReceiver.new(@mock_request)
     end
   end
 end

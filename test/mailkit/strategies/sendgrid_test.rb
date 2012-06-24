@@ -2,9 +2,7 @@ require 'test_helper'
 
 describe Mailkit::Strategies::Sendgrid do
   before do
-    @tempfile = Tempfile.new('upload')
-    @tempfile.write('hello world')
-    @tempfile.rewind
+    attachment = stub(:original_filename => 'hello.txt', :read => 'hello world')
 
     @params = {
       'SPF' => 'pass',
@@ -21,20 +19,11 @@ describe Mailkit::Strategies::Sendgrid do
       'html' => '<strong>We should do that again sometime</strong>',
       'to' => 'jack@example.com',
       'attachments' => '1',
-      'attachment1' => ActionDispatch::Http::UploadedFile.new({
-        :filename => 'hello.txt',
-        :type => 'text/plain',
-        :tempfile => @tempfile
-      })
+      'attachment1' => attachment
     }
 
     @mock_request = mock()
     @mock_request.expects(:params).returns(@params)
-  end
-
-  after do
-    @tempfile.close
-    @tempfile.unlink
   end
 
   it 'maps request parameters to correct attributes' do
@@ -48,7 +37,7 @@ describe Mailkit::Strategies::Sendgrid do
     assert_equal @params['text'], sendgrid.message.body.decoded
     assert_equal @params['text'], sendgrid.message.text_part.body.decoded
     assert_equal @params['html'], sendgrid.message.html_part.body.decoded
-    assert_equal @params['attachment1'].original_filename, sendgrid.message.attachments[0].filename
+    assert_equal 'hello.txt', sendgrid.message.attachments[0].filename
     assert_equal 'hello world', sendgrid.message.attachments[0].read
   end
 end
