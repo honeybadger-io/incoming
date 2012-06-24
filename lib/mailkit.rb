@@ -1,5 +1,6 @@
 require 'mail'
 require 'ostruct'
+
 require 'mailkit/strategy'
 require 'mailkit/strategies/raw'
 require 'mailkit/strategies/http_post'

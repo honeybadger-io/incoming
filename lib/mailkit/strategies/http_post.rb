@@ -20,7 +20,7 @@ module Mailkit
 
       protected
       def default_options
-        Mailkit.config
+        Mailkit.config.dup.freeze
       end
     end
   end

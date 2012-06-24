@@ -2,7 +2,7 @@ require 'test_helper'
 
 describe Mailkit::Strategies::Postmark do
   before do
-    @raw_json = File.open(File.expand_path("../../../support/postmark_spec.json",  __FILE__)).read
+    @raw_json = File.read(File.expand_path("../../../support/postmark_spec.json",  __FILE__))
 
     request_body = mock()
     request_body.expects(:read).returns(@raw_json)

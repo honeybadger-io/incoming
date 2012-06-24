@@ -1,6 +1,23 @@
-# http://documentation.mailgun.net/user_manual.html#receiving-messages
+require 'json'
+
 module Mailkit
   module Strategies
+    # Public: MailGun Incoming Mail Strategy
+    #
+    # API Documentation:
+    # http://documentation.mailgun.net/user_manual.html#receiving-messages
+    #
+    # Examples:
+    #
+    #   class MailReceiver < Mailkit::Strategies::Mailgun
+    #     setup do |options|
+    #       options.api_key = 'asdf'
+    #     end
+    #
+    #     def receive(mail)
+    #       puts "Got message from mailgun: #{mail.subject}"
+    #     end
+    #   end
     class Mailgun
       include Mailkit::Strategy
 
@@ -8,6 +25,10 @@ module Mailkit
 
       def initialize(request)
         params = request.params
+
+        if self.class.options.api_key.nil?
+          raise RequiredOptionError.new(':api_key option is required.')
+        end
 
         @signature = params['signature']
         @token = params['token']
@@ -41,10 +62,11 @@ module Mailkit
       end
 
       protected
-      def default_options
+
+      def self.default_options
         {
           api_key: nil
-        }
+        }.freeze
       end
     end
   end
