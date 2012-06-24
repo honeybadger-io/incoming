@@ -1,6 +1,8 @@
 module Mailkit
   module Strategies
     class HTTPPost < Raw
+      option :http_post_secret
+
       attr_accessor :signature, :token, :timestamp
 
       def initialize(request)
@@ -14,13 +16,8 @@ module Mailkit
       end
 
       def authenticate
-        hexdigest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), self.class.options.http_post_secret, [timestamp, token].join)
+        hexdigest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), self.class.default_options[:http_post_secret], [timestamp, token].join)
         hexdigest.eql?(signature) or false
-      end
-
-      protected
-      def default_options
-        Mailkit.config.dup.freeze
       end
     end
   end

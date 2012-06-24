@@ -2,6 +2,9 @@ module Mailkit
   module Strategy
     def self.included(base)
       base.extend ClassMethods
+      base.class_eval do
+        attr_reader :options
+      end
     end
 
     class RequiredOptionError < StandardError ; end
@@ -19,71 +22,47 @@ module Mailkit
         strategy.authenticate and strategy.receive(strategy.message)
       end
 
-      # Public: Strategy-specific options
+      # Public
+      # Returns an inherited set of default options set at the class-level
+      # for each strategy.
+      def default_options
+        return @default_options if @default_options
+        @default_options = superclass.respond_to?(:default_options) ? superclass.default_options : {}
+      end
+
+      # Public: Defines a valid class-level option for strategy
       #
-      # Returns the options configuration object
-      def options
-        @options ||= OpenStruct.new(default_options)
+      # Examples:
+      #
+      #   class Mailkit::Strategies::MyStrategy
+      #     include Mailkit::Strategy
+      #     option :api_key
+      #     option :mime, false
+      #   end
+      #
+      # Returns nothing
+      def option(name, value = nil)
+        default_options[name] = value
       end
 
       # Public: Configures strategy-specific options.
       #
-      # opts  - A hash of options. Valid keys must be defined in `#default_options`
-      #         on the strategy class. (optional)
-      # block - An optional block that can be used to set options directly.
+      # opts  - A hash of valid options.
       #
       # Examples:
       #
-      #   # Set options using a block
-      #   class MailReceiver < Mailkit::Strategies::MyStrategy
-      #     setup do |options|
-      #       options.api_key = 'asdf'
-      #       options.mime = true
-      #     end
-      #   end
-      #
-      #   # Set options using a hash
       #   class MailReceiver < Mailkit::Strategies::MyStrategy
       #     setup api_key: 'asdf', mime: true
       #   end
       #
       # Returns nothing
-      def setup(opts = {}, &block)
-        if block_given?
-          yield(options)
-        else
-          opts.each_pair do |key, value|
-            if default_options.keys.include?(key)
-              options.send(:"#{key}=", value)
-            else
-              raise InvalidOptionError.new(":#{key} is not a valid option for #{self.superclass.name}.")
-            end
-          end
+      def setup(opts = {})
+        opts.keys.each do |key|
+          next if default_options.keys.include?(key)
+          raise InvalidOptionError.new(":#{key} is not a valid option for #{self.superclass.name}.")
         end
-      end
 
-      protected
-
-      # Protected: Each strategy may provide its own options, which are configured
-      # by the `setup` method when defining a subclass. `#default_options` must be
-      # defined by the strategy in order to take advantage of this feature.
-      #
-      # Examples:
-      #
-      #   # In strategy:
-      #
-      #   protected
-      #
-      #   def default_options
-      #     {
-      #       api_key: nil,
-      #       mime: false
-      #     }.freeze
-      #   end
-      #
-      # Returns a hash of default options for strategy
-      def default_options
-        {}.freeze
+        @default_options = default_options.merge(opts)
       end
     end
 

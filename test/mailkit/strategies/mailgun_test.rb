@@ -2,9 +2,7 @@ require 'test_helper'
 
 describe Mailkit::Strategies::Mailgun do
   class MailgunReceiver < Mailkit::Strategies::Mailgun
-    setup do |options|
-      options.api_key = 'asdf'
-    end
+    setup :api_key => 'asdf'
 
     def receive(mail)
     end

@@ -3,12 +3,7 @@ require 'test_helper'
 describe Mailkit::Strategy do
   class Strategy
     include Mailkit::Strategy
-
-    protected
-
-    def self.default_options
-      { :api_key => 'foo' }.freeze
-    end
+    option :api_key, nil
   end
 
   class MailReceiver < Strategy

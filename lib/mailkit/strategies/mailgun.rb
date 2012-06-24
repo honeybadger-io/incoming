@@ -10,9 +10,7 @@ module Mailkit
     # Examples:
     #
     #   class MailReceiver < Mailkit::Strategies::Mailgun
-    #     setup do |options|
-    #       options.api_key = 'asdf'
-    #     end
+    #     setup api_key: 'asdf'
     #
     #     def receive(mail)
     #       puts "Got message from mailgun: #{mail.subject}"
@@ -21,12 +19,14 @@ module Mailkit
     class Mailgun
       include Mailkit::Strategy
 
+      option :api_key
+
       attr_accessor :signature, :token, :timestamp
 
       def initialize(request)
         params = request.params
 
-        if self.class.options.api_key.nil?
+        if self.class.default_options[:api_key].nil?
           raise RequiredOptionError.new(':api_key option is required.')
         end
 
@@ -55,18 +55,10 @@ module Mailkit
       end
 
       def authenticate
-        api_key = self.class.options.api_key
+        api_key = self.class.default_options[:api_key]
 
         hexdigest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), api_key, [timestamp, token].join)
         hexdigest.eql?(signature) or false
-      end
-
-      protected
-
-      def self.default_options
-        {
-          api_key: nil
-        }.freeze
       end
     end
   end
