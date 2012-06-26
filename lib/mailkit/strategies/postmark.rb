@@ -1,5 +1,3 @@
-require 'postmark_mitt'
-
 module Mailkit
   module Strategies
     class Postmark
@@ -24,6 +22,7 @@ module Mailkit
             body email.html_body
           end if email.html_body
 
+          # TODO: File Attachments
           # email.attachments.each { |a| add_file :filename => a.file_name, :content => a.read }
         end
       end

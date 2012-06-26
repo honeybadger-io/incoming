@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = %w[README.markdown LICENSE]
 
   s.add_dependency "mail",          "~> 2.4.1"
-  s.add_dependency "postmark-mitt", "~> 0.0.5"
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "gemfury"
