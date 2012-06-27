@@ -5,6 +5,7 @@ describe Mailkit::Strategies::Mailgun do
     setup :api_key => 'asdf'
 
     def receive(mail)
+      'success'
     end
   end
 
@@ -43,18 +44,18 @@ describe Mailkit::Strategies::Mailgun do
     assert_equal 'hello world', mailgun.message.attachments[0].read
   end
 
-  it 'it returns false from #authenticate when hexidigest is invalid' do
+  it 'it fails authentication when hexidigest is invalid' do
     OpenSSL::HMAC.expects(:hexdigest).returns('bar')
 
-    mailgun = MailgunReceiver.new(@mock_request)
-    assert mailgun.authenticate == false, 'should return false for invalid signature'
+    mailgun = MailgunReceiver.receive(@mock_request)
+    assert_equal false, mailgun
   end
 
-  it 'returns true from #authenticate when hexidigest is valid' do
+  it 'authenticates when hexidigest is valid' do
     OpenSSL::HMAC.expects(:hexdigest).returns('foo')
 
-    mailgun = MailgunReceiver.new(@mock_request)
-    assert mailgun.authenticate == true, 'should return true for valid signature'
+    mailgun = MailgunReceiver.receive(@mock_request)
+    assert_equal 'success', mailgun
   end
 
   it 'raises an exception when api key is not provided' do

@@ -74,6 +74,16 @@ module Mailkit
 
     protected
 
+    # Protected: Evaluates message and performs appropriate action.
+    # Override in subclass
+    #
+    # mail - A Mail::Message object
+    #
+    # Returns nothing
+    def receive(mail)
+      raise NotImplementedError.new('You must implement #receive')
+    end
+
     # Protected: Authenticates request before performing #receive
     #
     # Examples:
@@ -91,16 +101,6 @@ module Mailkit
     # Returns true by default
     def authenticate
       true
-    end
-
-    # Protected: Evaluates message and performs appropriate action.
-    # Override in subclass
-    #
-    # mail - A Mail::Message object
-    #
-    # Returns nothing
-    def receive(mail)
-      raise NotImplementedError.new('You must implement #receive')
     end
   end
 end
