@@ -5,8 +5,8 @@ Gem::Specification.new do |s|
 
   # The following lines are updated automatically by `rake gemspec`
   s.name              = 'mailkit'
-  s.version           = '0.0.6'
-  s.date              = '2012-06-23'
+  s.version           = '0.1.0'
+  s.date              = '2012-06-27'
   s.rubyforge_project = 'mailkit'
 
   s.summary     = "Standardizes various mail parse apis."
