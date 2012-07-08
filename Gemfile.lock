@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mailkit (0.1.0)
+    mailkit (0.1.1)
       mail (~> 2.4.1)
 
 GEM
