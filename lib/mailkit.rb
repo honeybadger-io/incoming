@@ -8,5 +8,5 @@ require 'mailkit/strategies/postmark'
 require 'mailkit/strategies/sendgrid'
 
 module Mailkit
-  VERSION = "0.1.0"
+  VERSION = "0.1.1"
 end

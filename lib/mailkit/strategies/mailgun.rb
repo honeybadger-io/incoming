@@ -19,7 +19,11 @@ module Mailkit
     class Mailgun
       include Mailkit::Strategy
 
+      # Mailgun API key
       option :api_key
+
+      # Use the stripped- parameters from the Mailgun API (strips out quoted parts and signatures)
+      option :stripped, false
 
       attr_accessor :signature, :token, :timestamp
 
@@ -34,18 +38,21 @@ module Mailkit
         @token = params['token']
         @timestamp = params['timestamp']
 
+        html_content = params[ self.class.default_options[:stripped] ? 'stripped-html' : 'body-html' ]
+        text_content = params[ self.class.default_options[:stripped] ? 'stripped-text' : 'body-plain' ]
+
         @message = Mail.new do
           headers Hash[JSON.parse(params['message-headers'])]
           from params['from']
           to params['recipient']
           subject params['subject']
 
-          body params['body-plain']
+          body text_content
 
           html_part do
             content_type 'text/html; charset=UTF-8'
-            body params['body-html']
-          end if params['body-html']
+            body html_content
+          end if html_content
 
           1.upto(params['attachment-count'].to_i).each do |num|
             attachment = params["attachment-#{num}"]

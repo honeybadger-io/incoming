@@ -2,8 +2,6 @@ require 'test_helper'
 
 describe Mailkit::Strategies::Mailgun do
   class MailgunReceiver < Mailkit::Strategies::Mailgun
-    setup :api_key => 'asdf'
-
     def receive(mail)
       'success'
     end
@@ -17,8 +15,10 @@ describe Mailkit::Strategies::Mailgun do
       'sender' => 'japhy@example.com',
       'from' => 'japhy@example.com',
       'subject' => 'Matterhorn',
-      'body-plain' => 'We should do that again sometime.',
-      'body-html' => '<strong>We should do that again sometime.</strong>',
+      'body-plain' => "We should do that again sometime.\n> Quoted part",
+      'body-html' => '<strong>We should do that again sometime.</strong>\r\n> <em>Quoted part</em>',
+      'stripped-text' => 'We should do that again sometime.',
+      'stripped-html' => '<strong>We should do that again sometime.</strong>',
       'signature' => 'foo',
       'message-headers' => '{}',
       'attachment-count' => '1',
@@ -27,21 +27,45 @@ describe Mailkit::Strategies::Mailgun do
 
     @mock_request = mock()
     @mock_request.expects(:params).returns(@params)
+
+    MailgunReceiver.class_eval do
+      setup :api_key => 'asdf'
+    end
   end
 
-  it 'it maps request parameters to correct attributes for non-mime request' do
-    mailgun = MailgunReceiver.new(@mock_request)
+  describe 'non-mime request' do
+    it 'maps request parameters to correct attributes' do
+      mailgun = MailgunReceiver.new(@mock_request)
 
-    assert_kind_of Mail::Message, mailgun.message
+      assert_kind_of Mail::Message, mailgun.message
 
-    assert_equal @params['recipient'], mailgun.message.to[0]
-    assert_equal @params['sender'], mailgun.message.from[0]
-    assert_equal @params['subject'], mailgun.message.subject
-    assert_equal @params['body-plain'], mailgun.message.body.decoded
-    assert_equal @params['body-plain'], mailgun.message.text_part.body.decoded
-    assert_equal @params['body-html'], mailgun.message.html_part.body.decoded
-    assert_equal 'hello.txt', mailgun.message.attachments[0].filename
-    assert_equal 'hello world', mailgun.message.attachments[0].read
+      assert_equal @params['recipient'], mailgun.message.to[0]
+      assert_equal @params['sender'], mailgun.message.from[0]
+      assert_equal @params['subject'], mailgun.message.subject
+      assert_equal @params['body-plain'], mailgun.message.body.decoded
+      assert_equal @params['body-plain'], mailgun.message.text_part.body.decoded
+      assert_equal @params['body-html'], mailgun.message.html_part.body.decoded
+      assert_equal 'hello.txt', mailgun.message.attachments[0].filename
+      assert_equal 'hello world', mailgun.message.attachments[0].read
+    end
+
+    describe 'stripped option is true' do
+      before do
+        MailgunReceiver.class_eval do
+          setup :api_key => 'asdf', :stripped => true
+        end
+      end
+
+      it 'uses stripped options' do
+        mailgun = MailgunReceiver.new(@mock_request)
+
+        assert_kind_of Mail::Message, mailgun.message
+
+        assert_equal @params['stripped-text'], mailgun.message.body.decoded
+        assert_equal @params['stripped-text'], mailgun.message.text_part.body.decoded
+        assert_equal @params['stripped-html'], mailgun.message.html_part.body.decoded
+      end
+    end
   end
 
   it 'it fails authentication when hexidigest is invalid' do
