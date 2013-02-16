@@ -46,7 +46,7 @@ req = Rack::Request.new(env)
 result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com with subject "hello world"
 ```
 
-## HTTP Post example:
+## Postfix example:
 
 ```ruby
 class EmailReceiver < Mailkit::Strategies::HTTPPost
