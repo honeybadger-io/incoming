@@ -66,6 +66,49 @@ result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com w
 http_post: "|http_post -s 6d7e5337a0cd69f52c3fcf9f5af438b1 http://www.example.com/emails"
 ```
 
+## Example Rails controller
+
+```ruby
+# app/controllers/emails_controller.rb
+class EmailsController < ActionController::Base
+  def create
+    if EmailReceiver.receive(request)
+      render :json => { status: 'ok' }
+    else
+      render :json => { status: 'rejected' }, :status => 403
+    end
+  end
+end
+```
+
+```ruby
+# config/routes.rb
+Rails.application.routes.draw do
+  post '/emails' => 'emails#create'
+end
+```
+
+```ruby
+# spec/controllers/emails_controller_spec.rb
+require 'spec_helper'
+
+describe EmailsController, '#create' do
+  it 'responds with success when request is valid' do
+    EmailReceiver.should_receive(:receive).and_return(true)
+    post :create
+    response.should be_success
+    response.body.should eq '{"status":"ok"}'
+  end
+
+  it 'responds with 403 when request is invalid' do
+    EmailReceiver.should_receive(:receive).and_return(false)
+    post :create
+    response.status.should eq 403
+    response.body.should eq '{"status":"rejected"}'
+  end
+end
+```
+
 ## Contributing
 
 1. Fork it.
