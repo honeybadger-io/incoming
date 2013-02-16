@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'spec_helper'
 
 describe Mailkit::Strategy do
   class Strategy
@@ -13,13 +13,15 @@ describe Mailkit::Strategy do
 
   describe 'self.setup with hash' do
     it 'raises an exception when invalid options have been set' do
-      assert_raises(Mailkit::Strategy::InvalidOptionError) do
+      expect {
         MailReceiver.class_eval { setup({ :foo => 'invalid' }) }
-      end
+      }.to raise_error(Mailkit::Strategy::InvalidOptionError)
     end
 
     it 'raises no exception when valid options are set' do
-      MailReceiver.class_eval { setup({ :api_key => 'valid' }) }
+      expect {
+        MailReceiver.class_eval { setup({ :api_key => 'valid' }) }
+      }.to_not raise_error
     end
   end
 
@@ -27,12 +29,12 @@ describe Mailkit::Strategy do
     it 'initializes itself and calls #receive' do
       args = [1, 2, 3]
 
-      object = mock()
-      object.expects(:authenticate).once.returns(true)
-      object.expects(:message).once.returns('foo')
-      object.expects(:receive).with('foo').once
+      object = stub()
+      object.stub(:authenticate).once.and_return(true)
+      object.stub(:message).once.and_return('foo')
+      object.stub(:receive).with('foo').once
 
-      MailReceiver.expects(:new).with(*args).returns(object)
+      MailReceiver.should_receive(:new).with(*args).and_return(object)
       MailReceiver.receive(*args)
     end
   end

@@ -24,9 +24,12 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = %w[README.markdown LICENSE]
 
   s.add_dependency "mail",          "~> 2.4.1"
+  s.add_dependency "postmark-mitt", "~> 0.0.11"
 
   s.add_development_dependency "sqlite3"
-  s.add_development_dependency "gemfury"
+  s.add_development_dependency "rspec"
+  s.add_development_dependency "guard"
+  s.add_development_dependency "guard-rspec"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE", "Rakefile", "README.markdown"]
 
