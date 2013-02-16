@@ -6,11 +6,9 @@ module Mailkit
       def initialize(request)
         params = request.params.dup
         envelope = JSON.parse(params['envelope'])
-        encodings = JSON.parse(params['charsets'])
 
-        encodings.each_pair do |key, encoding|
-          params[key].encode!('UTF-8', encoding, invalid: :replace, undef: :replace)
-        end
+        # TODO: Properly handle encodings
+        # encodings = JSON.parse(params['charsets'])
 
         @message = Mail.new do
           header params['headers']

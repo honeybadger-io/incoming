@@ -5,8 +5,8 @@ describe Mailkit::Strategies::HTTPPost do
     raw_email = File.open(File.expand_path("../../../fixtures/notification.eml",  __FILE__)).read
 
     params = {
-      signature: 'foo',
-      message: raw_email
+      :signature => 'foo',
+      :message => raw_email
     }
 
     @mock_request = mock()

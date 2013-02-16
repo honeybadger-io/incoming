@@ -22,7 +22,7 @@ result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com w
 
 ```ruby
 class EmailReceiver < Mailkit::Strategies::Mailgun
-  setup api_key: 'asdf'
+  setup :api_key => 'asdf'
 
   def receive(mail)
     puts %(Got message from #{mail.to.first} with subject "#{mail.subject}")
@@ -50,7 +50,7 @@ result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com w
 
 ```ruby
 class EmailReceiver < Mailkit::Strategies::HTTPPost
-  setup secret: '6d7e5337a0cd69f52c3fcf9f5af438b1'
+  setup :secret => '6d7e5337a0cd69f52c3fcf9f5af438b1'
 
   def receive(mail)
     puts %(Got message from #{mail.to.first} with subject "#{mail.subject}")
@@ -73,9 +73,9 @@ http_post: "|http_post -s 6d7e5337a0cd69f52c3fcf9f5af438b1 http://www.example.co
 class EmailsController < ActionController::Base
   def create
     if EmailReceiver.receive(request)
-      render :json => { status: 'ok' }
+      render :json => { :status => 'ok' }
     else
-      render :json => { status: 'rejected' }, :status => 403
+      render :json => { :status => 'rejected' }, :status => 403
     end
   end
 end
