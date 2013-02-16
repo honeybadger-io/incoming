@@ -1,7 +1,7 @@
 module Mailkit
   module Strategies
     class HTTPPost < Raw
-      option :http_post_secret
+      option :secret
 
       attr_accessor :signature, :token, :timestamp
 
@@ -16,7 +16,7 @@ module Mailkit
       end
 
       def authenticate
-        hexdigest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), self.class.default_options[:http_post_secret], [timestamp, token].join)
+        hexdigest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), self.class.default_options[:secret], [timestamp, token].join)
         hexdigest.eql?(signature) or false
       end
     end

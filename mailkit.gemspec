@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.date              = '2012-07-07'
   s.rubyforge_project = 'mailkit'
 
-  s.summary     = "Standardizes various mail parse apis."
-  s.description = "Standardizes various mail parse apis."
+  s.summary     = "Mailkit helps you receive email in your Rack apps."
+  s.description = "Mailkit standardizes various mail parse apis, making it a snap to receive emails through HTTP post hooks."
 
   s.authors     = ["Joshua Wood"]
   s.email       = ["josh@hintmedia.com"]
