@@ -22,9 +22,9 @@ Brought to you by :zap: **Honeybadger.io**, painless [Rails exception tracking](
 
 1. Add Incoming! to your Gemfile and run `bundle install`:
 
-```ruby
-gem 'incoming'
-```
+    ```ruby
+    gem 'incoming'
+    ```
 
 2. Create a new class to receive emails (see examples below)
 
