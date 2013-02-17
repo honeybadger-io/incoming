@@ -1,17 +1,40 @@
 Incoming!
 -----------
 
-Incoming! helps you receive email in your Rack apps.
+### Receive email in your Rack apps.
+
+Incoming! receives a `Rack::Request` and hands you a `Mail::Message`, much
+like `ActionMailer::Base.receive` does with a raw email. We currently
+support the following services:
+
+1. SendGrid
+2. Mailgun
+3. Postmark
+4. CloudMailin
+5. Any mail server capable of routing messages to a system command
 
 Brought to you by :zap: **Honeybadger.io**, painless [Rails exception tracking](https://www.honeybadger.io/).
 
 [![Build Status](https://travis-ci.org/honeybadger-io/incoming.png)](https://travis-ci.org/honeybadger-io/incoming)
 [![Gem Version](https://badge.fury.io/rb/incoming.png)](http://badge.fury.io/rb/incoming)
 
-## Sendgrid example:
+## Installation
+
+1. Add Incoming! to your Gemfile and run `bundle install`:
+
+```
+gem 'incoming'
+```
+
+2. Create a new class to receive emails (see examples below)
+
+3. Implement an HTTP endpoint to receive HTTP post hooks, and pass the
+   request to your receiver. (see examples below)
+
+## SendGrid example:
 
 ```ruby
-class EmailReceiver < Incoming::Strategies::Sendgrid
+class EmailReceiver < Incoming::Strategies::SendGrid
   def receive(mail)
     puts %(Got message from #{mail.to.first} with subject "#{mail.subject}")
   end

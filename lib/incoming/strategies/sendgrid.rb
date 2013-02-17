@@ -1,6 +1,6 @@
 module Incoming
   module Strategies
-    class Sendgrid
+    class SendGrid
       include Incoming::Strategy
 
       def initialize(request)

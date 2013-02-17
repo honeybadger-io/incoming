@@ -2,10 +2,10 @@ require 'mail'
 require 'incoming/strategy'
 
 module Incoming
-  VERSION = '0.1.1'
+  VERSION = '0.1.2'
 
   module Strategies
-    autoload :Sendgrid, 'incoming/strategies/sendgrid'
+    autoload :SendGrid, 'incoming/strategies/sendgrid'
     autoload :Mailgun, 'incoming/strategies/mailgun'
     autoload :Postmark, 'incoming/strategies/postmark'
     autoload :CloudMailin, 'incoming/strategies/cloudmailin'
