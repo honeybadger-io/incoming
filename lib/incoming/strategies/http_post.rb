@@ -1,6 +1,8 @@
 module Incoming
   module Strategies
-    class HTTPPost < Raw
+    class HTTPPost
+      include Incoming::Strategy
+
       option :secret
 
       attr_accessor :signature, :token, :timestamp
@@ -11,8 +13,7 @@ module Incoming
         @signature = params.delete(:signature)
         @token = params.delete(:token)
         @timestamp = params.delete(:timestamp)
-
-        super(params.delete(:message))
+        @message = Mail.new(params.delete(:message))
       end
 
       def authenticate

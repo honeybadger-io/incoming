@@ -46,6 +46,21 @@ req = Rack::Request.new(env)
 result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com with subject "hello world"
 ```
 
+## CloudMailin example:
+
+Use the Raw Format when setting up your address target.
+
+```ruby
+class EmailReceiver < Incoming::Strategies::CloudMailin
+  def receive(mail)
+    puts %(Got message from #{mail.to.first} with subject "#{mail.subject}")
+  end
+end
+
+req = Rack::Request.new(env)
+result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com with subject "hello world"
+```
+
 ## Postfix example:
 
 ```ruby

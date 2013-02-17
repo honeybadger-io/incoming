@@ -8,7 +8,7 @@ module Incoming
     autoload :Sendgrid, 'incoming/strategies/sendgrid'
     autoload :Mailgun, 'incoming/strategies/mailgun'
     autoload :Postmark, 'incoming/strategies/postmark'
+    autoload :CloudMailin, 'incoming/strategies/cloudmailin'
     autoload :HTTPPost, 'incoming/strategies/http_post'
-    autoload :Raw, 'incoming/strategies/raw'
   end
 end
