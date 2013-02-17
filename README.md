@@ -6,6 +6,7 @@ Incoming! helps you receive email in your Rack apps.
 Brought to you by :zap: **Honeybadger.io**, painless [Rails exception tracking](https://www.honeybadger.io/).
 
 [![Build Status](https://travis-ci.org/honeybadger-io/incoming.png)](https://travis-ci.org/honeybadger-io/incoming)
+[![Gem Version](https://badge.fury.io/rb/incoming.png)](http://badge.fury.io/rb/incoming)
 
 ## Sendgrid example:
 
