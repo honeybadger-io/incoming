@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://www.honeybadger.io/'
 
   s.required_rubygems_version = Gem::Requirement.new('>= 1.8.25')
-  s.files = Dir['{app,config,db,lib}/**/*'] + ['LICENSE', 'Rakefile', 'README.markdown']
+  s.files = Dir['{app,config,db,lib}/**/*'] + ['MIT-LICENSE', 'Rakefile', 'README.md']
   s.require_paths = %w[lib]
 
   s.executables << 'http_post'
