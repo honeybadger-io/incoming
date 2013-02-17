@@ -4,7 +4,7 @@ module Incoming
       include Incoming::Strategy
 
       def initialize(request)
-        @message = Mail.new(request.params.delete(:message))
+        @message = Mail.new(request.params['message'])
       end
     end
   end

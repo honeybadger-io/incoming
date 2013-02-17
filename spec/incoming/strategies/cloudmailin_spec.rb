@@ -5,15 +5,15 @@ describe Incoming::Strategies::CloudMailin do
     raw_email = File.open(File.expand_path("../../../fixtures/notification.eml",  __FILE__)).read
 
     params = {
-      :message => raw_email,
-      :envelope => {
-        "to" => "asdf@cloudmailin.net",
-        "from" => "josh@joshuawood.net",
-        "helo_domain" => "mail-da0-f41.google.com",
-        "remote_ip" => "127.0.0.1",
-        "spf" => {
-          "result" => "pass",
-          "domain" => "joshuawood.net"
+      'message' => raw_email,
+      'envelope' => {
+        'to' => 'asdf@cloudmailin.net',
+        'from' => 'josh@joshuawood.net',
+        'helo_domain' => 'mail-da0-f41.google.com',
+        'remote_ip' => '127.0.0.1',
+        'spf' => {
+          'result' => 'pass',
+          'domain' => 'joshuawood.net'
         }
       }
     }

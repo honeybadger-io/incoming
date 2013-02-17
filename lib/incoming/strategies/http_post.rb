@@ -10,10 +10,10 @@ module Incoming
       def initialize(request)
         params = request.params
 
-        @signature = params.delete(:signature)
-        @token = params.delete(:token)
-        @timestamp = params.delete(:timestamp)
-        @message = Mail.new(params.delete(:message))
+        @signature = params['signature']
+        @token = params['token']
+        @timestamp = params['timestamp']
+        @message = Mail.new(params['message'])
       end
 
       def authenticate
