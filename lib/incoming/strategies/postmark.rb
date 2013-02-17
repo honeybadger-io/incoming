@@ -1,7 +1,9 @@
-module Mailkit
+require 'postmark_mitt'
+
+module Incoming
   module Strategies
     class Postmark
-      include Mailkit::Strategy
+      include Incoming::Strategy
 
       def initialize(request)
         email = ::Postmark::Mitt.new(request.body.read)

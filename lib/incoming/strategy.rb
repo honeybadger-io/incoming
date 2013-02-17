@@ -1,4 +1,4 @@
-module Mailkit
+module Incoming
   module Strategy
     def self.included(base)
       base.extend ClassMethods
@@ -34,8 +34,8 @@ module Mailkit
       #
       # Examples:
       #
-      #   class Mailkit::Strategies::MyStrategy
-      #     include Mailkit::Strategy
+      #   class Incoming::Strategies::MyStrategy
+      #     include Incoming::Strategy
       #     option :api_key
       #     option :mime, false
       #   end
@@ -51,7 +51,7 @@ module Mailkit
       #
       # Examples:
       #
-      #   class MailReceiver < Mailkit::Strategies::MyStrategy
+      #   class MailReceiver < Incoming::Strategies::MyStrategy
       #     setup api_key: 'asdf', mime: true
       #   end
       #
@@ -88,7 +88,7 @@ module Mailkit
     #
     # Examples:
     #
-    #   class MailReceiver < Mailkit::Strategies::MyStrategy
+    #   class MailReceiver < Incoming::Strategies::MyStrategy
     #     def initialize(request)
     #       @secret_word = request.params['secret_word']
     #     end

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'mailkit'
+require 'incoming'
 require 'net/http'
 require 'uri'
 require 'openssl'

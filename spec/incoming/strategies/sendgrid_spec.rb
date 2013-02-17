@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Mailkit::Strategies::Sendgrid do
+describe Incoming::Strategies::Sendgrid do
   before do
     attachment = stub(:original_filename => 'hello.txt', :read => 'hello world')
 
@@ -27,7 +27,7 @@ describe Mailkit::Strategies::Sendgrid do
   end
 
   describe 'message' do
-    subject { Mailkit::Strategies::Sendgrid.new(@mock_request).message }
+    subject { Incoming::Strategies::Sendgrid.new(@mock_request).message }
 
     it { should be_a Mail::Message }
     it { subject.to[0].should eq 'jack@example.com' }

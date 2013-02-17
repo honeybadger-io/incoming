@@ -1,7 +1,7 @@
-module Mailkit
+module Incoming
   module Strategies
     class Sendgrid
-      include Mailkit::Strategy
+      include Incoming::Strategy
 
       def initialize(request)
         params = request.params.dup

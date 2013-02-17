@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Mailkit::Strategy do
+describe Incoming::Strategy do
   class Strategy
-    include Mailkit::Strategy
+    include Incoming::Strategy
     option :api_key, nil
   end
 
@@ -15,7 +15,7 @@ describe Mailkit::Strategy do
     it 'raises an exception when invalid options have been set' do
       expect {
         MailReceiver.class_eval { setup({ :foo => 'invalid' }) }
-      }.to raise_error(Mailkit::Strategy::InvalidOptionError)
+      }.to raise_error(Incoming::Strategy::InvalidOptionError)
     end
 
     it 'raises no exception when valid options are set' do

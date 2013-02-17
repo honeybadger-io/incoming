@@ -1,7 +1,7 @@
-module Mailkit
+module Incoming
   module Strategies
     class Raw
-      include Mailkit::Strategy
+      include Incoming::Strategy
 
       def initialize(raw_mail)
         @message = Mail.new(raw_mail)

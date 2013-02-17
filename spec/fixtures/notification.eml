@@ -3,17 +3,17 @@ Received: by 10.231.14.5 with SMTP id e5cs8149iba;
         Sat, 20 Aug 2011 20:55:15 -0700 (PDT)
 Received: by 10.231.45.206 with SMTP id g14mr2403740ibf.97.1313898914676;
         Sat, 20 Aug 2011 20:55:14 -0700 (PDT)
-Return-Path: <notifications@mailkit.test>
+Return-Path: <notifications@incoming.test>
 Received: from Josh-MacBook-Air.local (c-11-22-33-444.555.xx.yy.zzz [127.0.0.1])
         by mx.google.com with ESMTP id a20si4199205ibi.32.2011.08.20.20.55.13;
         Sat, 20 Aug 2011 20:55:13 -0700 (PDT)
-Received-SPF: softfail (google.com: domain of transitioning notifications@mailkit.test does not designate 127.0.0.1 as permitted sender) client-ip=127.0.0.1;
-Authentication-Results: mx.google.com; spf=softfail (google.com: domain of transitioning notifications@mailkit.test does not designate 127.0.0.1 as permitted sender) smtp.mail=notifications@mailkit.test
+Received-SPF: softfail (google.com: domain of transitioning notifications@incoming.test does not designate 127.0.0.1 as permitted sender) client-ip=127.0.0.1;
+Authentication-Results: mx.google.com; spf=softfail (google.com: domain of transitioning notifications@incoming.test does not designate 127.0.0.1 as permitted sender) smtp.mail=notifications@incoming.test
 Received: by Josh-MacBook-Air.local (Postfix, from userid 501)
 	id 0D949114264D; Sat, 20 Aug 2011 20:55:12 -0700 (PDT)
 Date: Sat, 20 Aug 2011 20:55:12 -0700
-From: notifications@mailkit.test
-Reply-To: Test <message-3657494728225115081@mailkit.test>
+From: notifications@incoming.test
+Reply-To: Test <message-3657494728225115081@incoming.test>
 To: Joshua Wood <josh@joshuawood.net>
 Message-ID: <4e5081a0adb86_9baa8043823c40559@Josh-MacBook-Air.local.mail>
 Subject: Jack Kerouac has replied to Test
@@ -30,4 +30,4 @@ Jack Kerouac has posted a reply to Test:
 
 Test test
 
-View/reply: http://mailkit.test/messages/1-test#comment_1
+View/reply: http://incoming.test/messages/1-test#comment_1

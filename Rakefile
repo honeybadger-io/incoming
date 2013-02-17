@@ -5,9 +5,11 @@ rescue LoadError
   puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
 end
 
-require 'rubygems'
-require 'rake'
 require 'date'
+
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec)
+task :default => :spec
 
 #############################################################################
 #
@@ -28,10 +30,6 @@ def date
   Date.today.to_s
 end
 
-def rubyforge_project
-  name
-end
-
 def gemspec_file
   "#{name}.gemspec"
 end
@@ -43,48 +41,6 @@ end
 def replace_header(head, header_name)
   head.sub!(/(\.#{header_name}\s*= ').*'/) { "#{$1}#{send(header_name)}'"}
 end
-
-#############################################################################
-#
-# Standard tasks
-#
-#############################################################################
-
-task :default => :test
-
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/*_test.rb'
-  test.verbose = true
-end
-
-desc "Generate RCov test coverage and open in your browser"
-task :coverage do
-  require 'rcov'
-  sh "rm -fr coverage"
-  sh "rcov test/*_test.rb"
-  sh "open coverage/index.html"
-end
-
-require 'rdoc/task'
-Rake::RDocTask.new do |rdoc|
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "#{name} #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
-
-desc "Open an irb session preloaded with this library"
-task :console do
-  sh "irb -rubygems -r ./lib/#{name}.rb"
-end
-
-#############################################################################
-#
-# Custom tasks (add your own tasks here)
-#
-#############################################################################
 
 #############################################################################
 #
@@ -102,7 +58,7 @@ task :release => :build do
   sh "git tag v#{version}"
   sh "git push origin master"
   sh "git push origin v#{version}"
-  sh "fury push pkg/#{name}-#{version}.gem"
+  sh "gem push pkg/#{name}-#{version}.gem"
 end
 
 desc "Build #{gem_file} into the pkg directory"
@@ -121,8 +77,6 @@ task :gemspec => :validate do
   replace_header(spec, :name)
   replace_header(spec, :version)
   replace_header(spec, :date)
-  #comment this out if your rubyforge_project has a different name
-  replace_header(spec, :rubyforge_project)
 
   # piece file back together and write
   File.open(gemspec_file, 'w') { |io| io.write(spec) }
@@ -141,4 +95,3 @@ task :validate do
     exit!
   end
 end
-

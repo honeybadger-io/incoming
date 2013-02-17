@@ -1,14 +1,14 @@
-Mailkit
+Incoming!
 -----------
 
-Mailkit helps you receive email in your Rack apps.
+Incoming! helps you receive email in your Rack apps.
 
 Brought to you by :zap: **Honeybadger.io**, painless [Rails exception tracking](https://www.honeybadger.io/).
 
 ## Sendgrid example:
 
 ```ruby
-class EmailReceiver < Mailkit::Strategies::Sendgrid
+class EmailReceiver < Incoming::Strategies::Sendgrid
   def receive(mail)
     puts %(Got message from #{mail.to.first} with subject "#{mail.subject}")
   end
@@ -21,7 +21,7 @@ result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com w
 ## Mailgun example:
 
 ```ruby
-class EmailReceiver < Mailkit::Strategies::Mailgun
+class EmailReceiver < Incoming::Strategies::Mailgun
   setup :api_key => 'asdf'
 
   def receive(mail)
@@ -36,7 +36,7 @@ result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com w
 ## Postmark example:
 
 ```ruby
-class EmailReceiver < Mailkit::Strategies::Postmark
+class EmailReceiver < Incoming::Strategies::Postmark
   def receive(mail)
     puts %(Got message from #{mail.to.first} with subject "#{mail.subject}")
   end
@@ -49,7 +49,7 @@ result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com w
 ## Postfix example:
 
 ```ruby
-class EmailReceiver < Mailkit::Strategies::HTTPPost
+class EmailReceiver < Incoming::Strategies::HTTPPost
   setup :secret => '6d7e5337a0cd69f52c3fcf9f5af438b1'
 
   def receive(mail)
@@ -115,9 +115,9 @@ end
 2. Create a topic branch `git checkout -b my_branch`
 3. Commit your changes `git commit -am "Boom"`
 3. Push to your branch `git push origin my_branch`
-4. Send a [pull request](https://github.com/honeybadger-io/mailkit/pulls)
+4. Send a [pull request](https://github.com/honeybadger-io/incoming/pulls)
 
 ## License
 
-Mailkit is Copyright 2013 © Honeybadger Industries LLC. It is free software, and
+Incoming! is Copyright 2013 © Honeybadger Industries LLC. It is free software, and
 may be redistributed under the terms specified in the MIT-LICENSE file.

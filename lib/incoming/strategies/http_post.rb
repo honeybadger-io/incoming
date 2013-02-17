@@ -1,4 +1,4 @@
-module Mailkit
+module Incoming
   module Strategies
     class HTTPPost < Raw
       option :secret

@@ -1,15 +1,15 @@
 require 'json'
 
-module Mailkit
+module Incoming
   module Strategies
-    # Public: MailGun Incoming Mail Strategy
+    # Public: MailGun Incoming! Mail Strategy
     #
     # API Documentation:
     # http://documentation.mailgun.net/user_manual.html#receiving-messages
     #
     # Examples:
     #
-    #   class MailReceiver < Mailkit::Strategies::Mailgun
+    #   class MailReceiver < Incoming::Strategies::Mailgun
     #     setup api_key: 'asdf'
     #
     #     def receive(mail)
@@ -17,7 +17,7 @@ module Mailkit
     #     end
     #   end
     class Mailgun
-      include Mailkit::Strategy
+      include Incoming::Strategy
 
       # Mailgun API key
       option :api_key

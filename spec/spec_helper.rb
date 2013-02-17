@@ -1,6 +1,5 @@
 require 'rspec'
-require 'postmark_mitt'
-require 'mailkit'
+require 'incoming'
 
 RSpec.configure do |c|
   c.mock_with :rspec

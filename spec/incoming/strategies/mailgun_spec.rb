@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Mailkit::Strategies::Mailgun do
-  class MailgunReceiver < Mailkit::Strategies::Mailgun
+describe Incoming::Strategies::Mailgun do
+  class MailgunReceiver < Incoming::Strategies::Mailgun
     def receive(mail)
       'success'
     end
@@ -80,6 +80,6 @@ describe Mailkit::Strategies::Mailgun do
 
     expect {
       MailgunReceiver.new(@mock_request)
-    }.to raise_error Mailkit::Strategy::RequiredOptionError
+    }.to raise_error Incoming::Strategy::RequiredOptionError
   end
 end
