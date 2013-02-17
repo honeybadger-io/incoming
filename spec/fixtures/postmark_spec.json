@@ -1,14 +1,10 @@
 {
  "Attachments": [
     {
-     "Content": "[BASE64]",
-     "ContentType": "image\/png",
-     "Name": "myimage.png"
-    },
-    {
-     "Content": "[BASE64]",
-     "ContentType": "application\/msword",
-     "Name": "mypaper.doc"
+     "Content": "aGVsbG8gd29ybGQ=\n",
+     "ContentLength": "17",
+     "ContentType": "text\/plain",
+     "Name": "hello.txt"
     }
  ],
  "Cc": "",

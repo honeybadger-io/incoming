@@ -1,4 +1,5 @@
 require 'postmark_mitt'
+require 'base64'
 
 module Incoming
   module Strategies
@@ -24,8 +25,9 @@ module Incoming
             body email.html_body
           end if email.html_body
 
-          # TODO: File Attachments
-          # email.attachments.each { |a| add_file :filename => a.file_name, :content => a.read }
+          email.attachments.each do |a|
+            add_file :filename => a.file_name, :content => Base64.decode64(a.source['Content'])
+          end
         end
       end
     end

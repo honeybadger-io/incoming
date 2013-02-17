@@ -19,5 +19,7 @@ describe Incoming::Strategies::Postmark do
     it { subject.from[0].should eq 'user@email.com' }
     it { subject.subject.should eq 'This is an inbound message' }
     it { subject.body.decoded.should eq '[ASCII]' }
+    it { subject.attachments[0].filename.should eq 'hello.txt' }
+    it { subject.attachments[0].read.should eq 'hello world' }
   end
 end
