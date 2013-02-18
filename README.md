@@ -44,6 +44,8 @@ req = Rack::Request.new(env)
 result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com with subject "hello world"
 ```
 
+[Sendgrid API reference](http://sendgrid.com/docs/API_Reference/Webhooks/parse.html)
+
 ## Mailgun example:
 
 ```ruby
@@ -59,6 +61,8 @@ req = Rack::Request.new(env)
 result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com with subject "hello world"
 ```
 
+[Mailgun API reference](http://documentation.mailgun.net/user_manual.html#receiving-messages)
+
 ## Postmark example:
 
 ```ruby
@@ -71,6 +75,8 @@ end
 req = Rack::Request.new(env)
 result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com with subject "hello world"
 ```
+
+[Postmark API reference](http://developer.postmarkapp.com/developer-inbound.html)
 
 ## CloudMailin example:
 
@@ -86,6 +92,8 @@ end
 req = Rack::Request.new(env)
 result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com with subject "hello world"
 ```
+
+[CloudMailin API reference](http://docs.cloudmailin.com/http_post_formats/)
 
 ## Postfix example:
 
@@ -149,6 +157,11 @@ describe EmailsController, '#create' do
   end
 end
 ```
+
+## TODO
+
+1. Provide authentication for all strategies where possible (currently
+   only Mailgun requests are authenticated.)
 
 ## Contributing
 
