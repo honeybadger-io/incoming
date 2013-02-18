@@ -11,7 +11,6 @@ Gem::Specification.new do |s|
   s.email       = ['josh@honeybadger.io']
   s.homepage    = 'https://github.com/honeybadger-io/incoming'
 
-  s.required_rubygems_version = Gem::Requirement.new('>= 1.8.25')
   s.files = Dir['{app,config,db,lib}/**/*'] + ['MIT-LICENSE', 'Rakefile', 'README.md']
   s.require_paths = %w[lib]
 
