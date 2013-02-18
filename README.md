@@ -3,7 +3,7 @@ Incoming!
 
 ### Receive email in your Rack apps.
 
-Incoming! receives a `Rack::Request` and hands you a `Mail::Message`, much
+Incoming! receives a `Rack::Request` and hands you a [`Mail::Message`](https://github.com/mikel/mail/), much
 like `ActionMailer::Base.receive` does with a raw email. We currently
 support the following services:
 
