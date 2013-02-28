@@ -111,7 +111,10 @@ result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com w
 ```
 
 ```
-# Postfix virtual alias
+# /etc/postfix/virtual
+@example.com http_post
+
+# /etc/mail/aliases
 http_post: "|http_post -s 6d7e5337a0cd69f52c3fcf9f5af438b1 http://www.example.com/emails"
 ```
 
