@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
 
   s.executables << 'http_post'
 
-  s.add_dependency 'mail',          '~> 2.4.1'
+  s.add_dependency 'mail',          '~> 2.4'
   s.add_dependency 'postmark-mitt', '~> 0.0.11'
 
   s.add_development_dependency 'rake'
