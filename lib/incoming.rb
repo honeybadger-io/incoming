@@ -2,7 +2,7 @@ require 'mail'
 require 'incoming/strategy'
 
 module Incoming
-  VERSION = '0.1.3'
+  VERSION = '0.1.4'
 
   module Strategies
     autoload :SendGrid, 'incoming/strategies/sendgrid'

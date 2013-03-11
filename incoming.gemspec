@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   # The following lines are updated automatically by `rake gemspec`
   s.name              = 'incoming'
-  s.version           = '0.1.3'
-  s.date              = '2013-02-18'
+  s.version           = '0.1.4'
+  s.date              = '2013-03-11'
 
   s.summary     = 'Incoming! helps you receive email in your Rack apps.'
   s.description = 'Incoming! standardizes various mail parse apis, making it a snap to receive emails through HTTP post hooks.'
