@@ -117,6 +117,44 @@ result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com w
 # /etc/mail/aliases
 http_post: "|http_post -s 6d7e5337a0cd69f52c3fcf9f5af438b1 http://www.example.com/emails"
 ```
+## Qmail example:
+
+```ruby
+class EmailReceiver < Incoming::Strategies::HTTPPost
+  setup :secret => '6d7e5337a0cd69f52c3fcf9f5af438b1'
+
+  def receive(mail)
+    puts %(Got message from #{mail.to.first} with subject "#{mail.subject}")
+  end
+end
+
+req = Rack::Request.new(env)
+result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com with subject "hello world"
+```
+
+To setup a *global* incoming email alias:
+
+```
+# /var/qmail/alias/.qmail-whoever - mails to whoever@ will be delivered to this alias.
+|http_post -s 6d7e5337a0cd69f52c3fcf9f5af438b1 http://www.example.com/emails
+```
+
+Domain-specific incoming aliases can be set as follows:
+
+1. Add the following line to the `/var/qmail/control/virtualdomains` file:
+
+```
+#/var/qmail/control/virtualdomains
+example.com:example
+```
+
+2. For each email address that you need to handle with Incoming, add the correspoding email alias to the `example` email account:
+
+```
+#~example/.qmail-whoever
+|http_post -s 6d7e5337a0cd69f52c3fcf9f5af438b1 http://www.example.com/emails
+```
+Now mails to `whoever@example.com` will be posted to the corresponding URL above. To post all mails to `@example.com`, just add the above line to `~example/.qmail-default`.
 
 ## Example Rails controller
 
