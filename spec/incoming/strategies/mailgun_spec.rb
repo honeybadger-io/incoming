@@ -14,6 +14,7 @@ describe Incoming::Strategies::Mailgun do
       'recipient' => 'jack@example.com',
       'sender' => 'japhy@example.com',
       'from' => 'japhy@example.com',
+      'To' => 'jack@example.com, Second Recipient <second@example.com>',
       'subject' => 'Matterhorn',
       'body-plain' => "We should do that again sometime.\n> Quoted part",
       'body-html' => '<strong>We should do that again sometime.</strong>\r\n> <em>Quoted part</em>',
@@ -40,6 +41,7 @@ describe Incoming::Strategies::Mailgun do
        it { subject.should be_a Mail::Message }
 
        it { subject.to[0].should eq @params['recipient'] }
+       it { subject.to[1].should eq 'second@example.com' }
        it { subject.from[0].should eq @params['sender'] }
        it { subject.subject.should eq @params['subject'] }
        it { subject.body.decoded.should eq @params['body-plain'] }
