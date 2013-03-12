@@ -141,20 +141,14 @@ To setup a *global* incoming email alias:
 
 Domain-specific incoming aliases can be set as follows:
 
-1. Add the following line to the `/var/qmail/control/virtualdomains` file:
-
 ```
 #/var/qmail/control/virtualdomains
 example.com:example
-```
 
-2. For each email address that you need to handle with Incoming, add the correspoding email alias to the `example` email account:
-
-```
 #~example/.qmail-whoever
 |http_post -s 6d7e5337a0cd69f52c3fcf9f5af438b1 http://www.example.com/emails
 ```
-Now mails to `whoever@example.com` will be posted to the corresponding URL above. To post all mails to `@example.com`, just add the above line to `~example/.qmail-default`.
+Now mails to `whoever@example.com` will be posted to the corresponding URL above. To post all mails for `example.com`, just add the above line to `~example/.qmail-default`.
 
 ## Example Rails controller
 
