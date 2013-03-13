@@ -6,7 +6,7 @@ PATH
       postmark-mitt (~> 0.0.11)
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     coderay (1.0.9)
     diff-lcs (1.2.1)
@@ -23,7 +23,7 @@ GEM
     json_pure (1.7.7)
     listen (0.7.3)
     lumberjack (1.0.2)
-    mail (2.5.3)
+    mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -61,5 +61,6 @@ DEPENDENCIES
   guard
   guard-rspec
   incoming!
+  mail (= 2.4.4)
   rake
   rspec
