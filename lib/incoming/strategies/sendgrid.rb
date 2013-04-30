@@ -1,3 +1,5 @@
+require 'json'
+
 module Incoming
   module Strategies
     class SendGrid

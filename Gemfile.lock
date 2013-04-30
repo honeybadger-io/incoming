@@ -39,6 +39,7 @@ GEM
       method_source (~> 0.8)
       slop (~> 3.4)
     rake (10.0.3)
+    rb-fsevent (0.9.3)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -62,4 +63,5 @@ DEPENDENCIES
   guard-rspec
   incoming!
   rake
+  rb-fsevent (~> 0.9)
   rspec

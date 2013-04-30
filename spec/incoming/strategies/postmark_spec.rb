@@ -12,14 +12,15 @@ describe Incoming::Strategies::Postmark do
   end
 
   describe '#message' do
-    subject { Incoming::Strategies::Postmark.new(@mock_request).message }
+    subject { receiver.receive(@mock_request) }
 
     it { should be_a Mail::Message }
-    it { subject.to[0].should eq '451d9b70cf9364d23ff6f9d51d870251569e+ahoy@inbound.postmarkapp.com' }
-    it { subject.from[0].should eq 'user@email.com' }
-    it { subject.subject.should eq 'This is an inbound message' }
-    it { subject.body.decoded.should eq '[ASCII]' }
-    it { subject.attachments[0].filename.should eq 'hello.txt' }
-    it { subject.attachments[0].read.should eq 'hello world' }
+
+    its('to.first') { should eq '451d9b70cf9364d23ff6f9d51d870251569e+ahoy@inbound.postmarkapp.com' }
+    its('from.first') { should eq 'user@email.com' }
+    its('subject') { should eq 'This is an inbound message' }
+    its('body.decoded') { should eq '[ASCII]' }
+    its('attachments.first.filename') { should eq 'hello.txt' }
+    its('attachments.first.read') { should eq 'hello world' }
   end
 end

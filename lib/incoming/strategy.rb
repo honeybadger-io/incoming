@@ -72,9 +72,7 @@ module Incoming
     # Public: Translates arguments into a Mail::Message object
     def initialize(*args) ; end
 
-    protected
-
-    # Protected: Evaluates message and performs appropriate action.
+    # Public: Evaluates message and performs appropriate action.
     # Override in subclass
     #
     # mail - A Mail::Message object
@@ -84,7 +82,7 @@ module Incoming
       raise NotImplementedError.new('You must implement #receive')
     end
 
-    # Protected: Authenticates request before performing #receive
+    # Public: Authenticates request before performing #receive
     #
     # Examples:
     #

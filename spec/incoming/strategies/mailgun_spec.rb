@@ -1,11 +1,7 @@
 require 'spec_helper'
 
 describe Incoming::Strategies::Mailgun do
-  class MailgunReceiver < Incoming::Strategies::Mailgun
-    def receive(mail)
-      'success'
-    end
-  end
+  let(:receiver) { test_receiver(:api_key => 'asdf') }
 
   before do
     attachment = stub(:original_filename => 'hello.txt', :read => 'hello world')
@@ -27,59 +23,51 @@ describe Incoming::Strategies::Mailgun do
 
     @mock_request = stub()
     @mock_request.stub(:params).and_return(@params)
-
-    MailgunReceiver.class_eval do
-      setup :api_key => 'asdf'
-    end
   end
 
   describe 'non-mime request' do
-    describe 'message' do
-      subject { MailgunReceiver.new(@mock_request).message }
+    describe 'receive' do
+      subject { receiver.receive(@mock_request) }
+      before(:each) { OpenSSL::HMAC.stub(:hexdigest).and_return('foo') }
 
-       it { subject.should be_a Mail::Message }
+      it { should be_a Mail::Message }
 
-       it { subject.to[0].should eq @params['recipient'] }
-       it { subject.from[0].should eq @params['sender'] }
-       it { subject.subject.should eq @params['subject'] }
-       it { subject.body.decoded.should eq @params['body-plain'] }
-       it { subject.text_part.body.decoded.should eq @params['body-plain'] }
-       it { subject.html_part.body.decoded.should eq @params['body-html'] }
-       it { subject.attachments[0].filename.should eq 'hello.txt' }
-       it { subject.attachments[0].read.should eq 'hello world' }
+      its('to.first') { should eq @params['recipient'] }
+      its('from.first') { should eq @params['sender'] }
+      its('subject') { should eq @params['subject'] }
+      its('body.decoded') { should eq @params['body-plain'] }
+      its('text_part.body.decoded') { should eq @params['body-plain'] }
+      its('html_part.body.decoded') { should eq @params['body-html'] }
+      its('attachments.first.filename') { should eq 'hello.txt' }
+      its('attachments.first.read') { should eq 'hello world' }
 
       context 'stripped option is true' do
-        before do
-          MailgunReceiver.class_eval do
-            setup :api_key => 'asdf', :stripped => true
-          end
-        end
+        let(:receiver) { test_receiver(:api_key => 'asdf', :stripped => true) }
 
-        it { subject.should be_a Mail::Message }
-        it { subject.body.decoded.should eq @params['stripped-text'] }
-        it { subject.text_part.body.decoded.should eq @params['stripped-text'] }
-        it { subject.html_part.body.decoded.should eq @params['stripped-html'] }
+        it { should be_a Mail::Message }
+
+        its('body.decoded') { should eq @params['stripped-text'] }
+        its('text_part.body.decoded') { should eq @params['stripped-text'] }
+        its('html_part.body.decoded') { should eq @params['stripped-html'] }
       end
     end
   end
 
-  it 'it fails authentication when hexidigest is invalid' do
+  it 'returns false from #authenticate when hexidigest is invalid' do
     OpenSSL::HMAC.stub(:hexdigest).and_return('bar')
-    mailgun = MailgunReceiver.receive(@mock_request)
-     mailgun.should be_false
+    mailgun = receiver.new(@mock_request)
+    mailgun.authenticate.should be_false
   end
 
   it 'authenticates when hexidigest is valid' do
     OpenSSL::HMAC.stub(:hexdigest).and_return('foo')
-    mailgun = MailgunReceiver.receive(@mock_request)
-    mailgun.should eq 'success'
+    mailgun = receiver.new(@mock_request)
+    mailgun.authenticate.should be_true
   end
 
   it 'raises an exception when api key is not provided' do
-    MailgunReceiver.class_eval { setup({ :api_key => nil }) }
-
     expect {
-      MailgunReceiver.new(@mock_request)
+      test_receiver(:api_key => nil).new(@mock_request)
     }.to raise_error Incoming::Strategy::RequiredOptionError
   end
 end

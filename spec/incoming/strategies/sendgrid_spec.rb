@@ -27,16 +27,17 @@ describe Incoming::Strategies::SendGrid do
   end
 
   describe 'message' do
-    subject { Incoming::Strategies::SendGrid.new(@mock_request).message }
+    subject { receiver.receive(@mock_request) }
 
     it { should be_a Mail::Message }
-    it { subject.to[0].should eq 'jack@example.com' }
-    it { subject.from[0].should eq 'japhy@example.com' }
-    it { subject.subject.should eq @params['subject'] }
-    it { subject.body.decoded.should eq @params['text'] }
-    it { subject.text_part.body.decoded.should eq @params['text'] }
-    it { subject.html_part.body.decoded.should eq @params['html'] }
-    it { subject.attachments[0].filename.should eq 'hello.txt' }
-    it { subject.attachments[0].read.should eq 'hello world' }
+
+    its('to.first') { should eq 'jack@example.com' }
+    its('from.first') { should eq 'japhy@example.com' }
+    its('subject') { should eq @params['subject'] }
+    its('body.decoded') { should eq @params['text'] }
+    its('text_part.body.decoded') { should eq @params['text'] }
+    its('html_part.body.decoded') { should eq @params['html'] }
+    its('attachments.first.filename') { should eq 'hello.txt' }
+    its('attachments.first.read') { should eq 'hello world' }
   end
 end
