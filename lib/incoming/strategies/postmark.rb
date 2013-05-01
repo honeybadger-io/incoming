@@ -13,10 +13,6 @@ module Incoming
 
         @message = Mail.new do
           headers email.headers
-          from email.from
-          to email.to
-          reply_to email.reply_to
-          subject email.subject
 
           body email.text_body
 

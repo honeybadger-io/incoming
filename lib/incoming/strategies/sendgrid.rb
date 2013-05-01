@@ -7,7 +7,6 @@ module Incoming
 
       def initialize(request)
         params = request.params.dup
-        envelope = JSON.parse(params['envelope'])
 
         # TODO: Properly handle encodings
         # encodings = JSON.parse(params['charsets'])
@@ -18,9 +17,6 @@ module Incoming
 
         @message = Mail.new do
           header params['headers']
-          from params['from']
-          to envelope['to'].first
-          subject params['subject']
 
           body params['text']
 

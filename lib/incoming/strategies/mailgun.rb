@@ -47,9 +47,6 @@ module Incoming
 
         @message = Mail.new do
           headers Hash[JSON.parse(params['message-headers'])]
-          from params['from']
-          to params['recipient']
-          subject params['subject']
 
           body text_content
 

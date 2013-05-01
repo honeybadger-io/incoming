@@ -20,7 +20,7 @@
     },
     {
      "Name": "Subject",
-     "Value": "Welcome to Postmark"
+     "Value": "This is an inbound message"
     },
     {
      "Name": "From",
