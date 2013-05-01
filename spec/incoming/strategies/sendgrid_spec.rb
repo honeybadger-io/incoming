@@ -2,8 +2,6 @@ require 'spec_helper'
 
 describe Incoming::Strategies::SendGrid do
   before do
-    attachment = stub(:original_filename => 'hello.txt', :read => 'hello world')
-
     @params = {
       'SPF' => 'pass',
       'charsets' => '{"from": "UTF-8", "subject": "UTF-8", "text": "ISO-8859-1", "to": "UTF-8"}',
@@ -18,8 +16,15 @@ describe Incoming::Strategies::SendGrid do
       'text' => 'We should do that again sometime.',
       'html' => '<strong>We should do that again sometime</strong>',
       'to' => 'jack@example.com',
-      'attachments' => '1',
-      'attachment1' => attachment
+      'attachments' => '2',
+      'attachment1' => stub(:original_filename => 'hello.txt', :read => 'hello world'),
+      'attachment2' => {
+        'filename' => 'bar.txt',
+        'type' => 'text/plain',
+        'name' => 'attachment-2',
+        'tempfile' => stub(:read => 'hullo world'),
+        'head' => "Content-Disposition: form-data; name=\"attachment-2\"; filename=\"bar.txt\"\r\nContent-Type: text/plain\r\nContent-Length: ll\r\n"
+      }
     }
 
     @mock_request = stub()
@@ -39,5 +44,7 @@ describe Incoming::Strategies::SendGrid do
     its('html_part.body.decoded') { should eq @params['html'] }
     its('attachments.first.filename') { should eq 'hello.txt' }
     its('attachments.first.read') { should eq 'hello world' }
+    its('attachments.last.filename') { should eq 'bar.txt' }
+    its('attachments.last.read') { should eq 'hullo world' }
   end
 end

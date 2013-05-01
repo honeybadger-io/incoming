@@ -12,6 +12,10 @@ module Incoming
         # TODO: Properly handle encodings
         # encodings = JSON.parse(params['charsets'])
 
+        attachments = 1.upto(params['attachments'].to_i).map do |num|
+          attachment_from_params(params["attachment#{num}"])
+        end
+
         @message = Mail.new do
           header params['headers']
           from params['from']
@@ -25,9 +29,8 @@ module Incoming
             body params['html']
           end if params['html']
 
-          1.upto(params['attachments'].to_i).each do |num|
-            attachment = params["attachment#{num}"]
-            add_file(:filename => attachment.original_filename, :content => attachment.read)
+          attachments.each do |attachment|
+            add_file(attachment)
           end
         end
       end

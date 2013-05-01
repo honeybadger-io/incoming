@@ -4,8 +4,6 @@ describe Incoming::Strategies::Mailgun do
   let(:receiver) { test_receiver(:api_key => 'asdf') }
 
   before do
-    attachment = stub(:original_filename => 'hello.txt', :read => 'hello world')
-
     @params = {
       'recipient' => 'jack@example.com',
       'sender' => 'japhy@example.com',
@@ -17,8 +15,15 @@ describe Incoming::Strategies::Mailgun do
       'stripped-html' => '<strong>We should do that again sometime.</strong>',
       'signature' => 'foo',
       'message-headers' => '{}',
-      'attachment-count' => '1',
-      'attachment-1' => attachment
+      'attachment-count' => '2',
+      'attachment-1' => stub(:original_filename => 'foo.txt', :read => 'hello world'),
+      'attachment-2' => {
+        'filename' => 'bar.txt',
+        'type' => 'text/plain',
+        'name' => 'attachment-2',
+        'tempfile' => stub(:read => 'hullo world'),
+        'head' => "Content-Disposition: form-data; name=\"attachment-2\"; filename=\"bar.txt\"\r\nContent-Type: text/plain\r\nContent-Length: 11\r\n"
+      }
     }
 
     @mock_request = stub()
@@ -38,8 +43,10 @@ describe Incoming::Strategies::Mailgun do
       its('body.decoded') { should eq @params['body-plain'] }
       its('text_part.body.decoded') { should eq @params['body-plain'] }
       its('html_part.body.decoded') { should eq @params['body-html'] }
-      its('attachments.first.filename') { should eq 'hello.txt' }
+      its('attachments.first.filename') { should eq 'foo.txt' }
       its('attachments.first.read') { should eq 'hello world' }
+      its('attachments.last.filename') { should eq 'bar.txt' }
+      its('attachments.last.read') { should eq 'hullo world' }
 
       context 'stripped option is true' do
         let(:receiver) { test_receiver(:api_key => 'asdf', :stripped => true) }
