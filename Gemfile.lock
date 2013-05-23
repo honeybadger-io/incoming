@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    incoming (0.1.4)
+    incoming (0.1.5)
       mail (~> 2.4)
       postmark-mitt (~> 0.0.11)
 
