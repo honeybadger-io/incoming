@@ -41,6 +41,11 @@ module Incoming
         html_content = params[ self.class.default_options[:stripped] ? 'stripped-html' : 'body-html' ]
         text_content = params[ self.class.default_options[:stripped] ? 'stripped-text' : 'body-plain' ]
 
+        if self.class.default_options[:stripped] && text_content.to_s == ''
+          html_content = params['body-html']
+          text_content = params['body-plain']
+        end
+
         attachments = 1.upto(params['attachment-count'].to_i).map do |num|
           attachment_from_params(params["attachment-#{num}"])
         end
