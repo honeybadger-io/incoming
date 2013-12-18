@@ -32,7 +32,7 @@ GEM
       method_source (~> 0.8)
       slop (~> 3.4)
     rack (1.5.2)
-    rake (10.0.3)
+    rake (10.1.0)
     rb-fsevent (0.9.3)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
