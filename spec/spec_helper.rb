@@ -1,5 +1,6 @@
 require 'rspec'
 require 'incoming'
+require 'rack'
 
 RSpec.configure do |c|
   c.mock_with :rspec
@@ -9,6 +10,12 @@ RSpec.configure do |c|
   module Helpers
     def self.included(base)
       base.let(:receiver) { test_receiver }
+    end
+
+    def recorded_requst(name)
+      env = Marshal.load(File.read(File.join(File.expand_path('../../spec/fixtures/records', __FILE__), "#{name}.env")))
+      env['rack.input'] = StringIO.new(env['rack.input'])
+      Rack::Request.new(env)
     end
 
     def test_receiver(options = {})
