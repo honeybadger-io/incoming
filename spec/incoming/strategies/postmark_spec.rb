@@ -4,11 +4,18 @@ describe Incoming::Strategies::Postmark do
   before do
     @raw_json = File.read(File.expand_path("../../../fixtures/postmark_spec.json",  __FILE__))
 
-    request_body = stub()
-    request_body.stub(:read).and_return(@raw_json)
+    @request_body = stub()
+    @request_body.stub(:read).and_return(@raw_json)
 
     @mock_request = stub()
-    @mock_request.stub(:body).and_return(request_body)
+    @mock_request.stub(:body).and_return(@request_body)
+  end
+
+  context 'json parse error' do
+    it 'raises exception to caller' do
+      @request_body.stub(:read).and_return('{invalid')
+      expect { receiver.receive(@mock_request) }.to raise_error(JSON::ParserError)
+    end
   end
 
   describe '#message' do
