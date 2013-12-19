@@ -12,11 +12,8 @@ describe Incoming::Strategies::SendGrid do
       'attachments' => '2',
       'attachment1' => stub(:original_filename => 'hello.txt', :read => 'hello world'),
       'attachment2' => {
-        'filename' => 'bar.txt',
-        'type' => 'text/plain',
-        'name' => 'attachment-2',
-        'tempfile' => stub(:read => 'hullo world'),
-        'head' => "Content-Disposition: form-data; name=\"attachment-2\"; filename=\"bar.txt\"\r\nContent-Type: text/plain\r\nContent-Length: ll\r\n"
+        :filename => 'bar.txt',
+        :tempfile => stub(:read => 'hullo world')
       }
     }
 

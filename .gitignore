@@ -2,3 +2,4 @@
 log/*.log
 pkg/
 tmp/
+spec/fixtures/records/favicon.ico.env

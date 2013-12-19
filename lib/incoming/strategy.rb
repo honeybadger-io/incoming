@@ -111,7 +111,7 @@ module Incoming
       # Returns Hash for Mail::Message#add_file
       def attachment_from_params(uploaded_file_or_hash)
         filename, content = if Hash === uploaded_file_or_hash
-                              [uploaded_file_or_hash['filename'], uploaded_file_or_hash['tempfile'].read]
+                              [uploaded_file_or_hash[:filename], uploaded_file_or_hash[:tempfile].read]
                             else
                               [uploaded_file_or_hash.original_filename, uploaded_file_or_hash.read]
                             end

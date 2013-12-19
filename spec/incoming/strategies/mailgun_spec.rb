@@ -14,11 +14,8 @@ describe Incoming::Strategies::Mailgun do
       'attachment-count' => '2',
       'attachment-1' => stub(:original_filename => 'foo.txt', :read => 'hello world'),
       'attachment-2' => {
-        'filename' => 'bar.txt',
-        'type' => 'text/plain',
-        'name' => 'attachment-2',
-        'tempfile' => stub(:read => 'hullo world'),
-        'head' => "Content-Disposition: form-data; name=\"attachment-2\"; filename=\"bar.txt\"\r\nContent-Type: text/plain\r\nContent-Length: 11\r\n"
+        :filename => 'bar.txt',
+        :tempfile => stub(:read => 'hullo world')
       }
     }
 
