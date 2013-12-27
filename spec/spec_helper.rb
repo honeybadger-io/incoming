@@ -13,7 +13,7 @@ RSpec.configure do |c|
     end
 
     def recorded_request(name)
-      env = Marshal.load(File.read(File.join(File.expand_path('../../spec/fixtures/records', __FILE__), "#{name}.env")))
+      env = Marshal.load(File.read(File.join(File.expand_path('../../spec/fixtures', __FILE__), "#{name}.env")))
       env['rack.input'] = StringIO.new(env['rack.input'])
       Rack::Request.new(env)
     end
