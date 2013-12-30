@@ -9,7 +9,7 @@ describe Incoming::Strategies::HTTPPost do
       'message' => raw_email
     }
 
-    @mock_request = mock()
+    @mock_request = double()
     @mock_request.stub(:params).and_return(params)
   end
 

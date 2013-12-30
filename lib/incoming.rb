@@ -5,6 +5,7 @@ module Incoming
   VERSION = '0.1.6'
 
   module Strategies
+    autoload :Mandrill, 'incoming/strategies/mandrill'
     autoload :SendGrid, 'incoming/strategies/sendgrid'
     autoload :Mailgun, 'incoming/strategies/mailgun'
     autoload :Postmark, 'incoming/strategies/postmark'

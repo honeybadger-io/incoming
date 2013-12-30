@@ -18,7 +18,7 @@ describe Incoming::Strategies::CloudMailin do
       }
     }
 
-    @mock_request = mock()
+    @mock_request = double()
     @mock_request.stub(:params).and_return(params)
   end
 

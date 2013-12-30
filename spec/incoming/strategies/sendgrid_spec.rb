@@ -10,14 +10,14 @@ describe Incoming::Strategies::SendGrid do
       'text' => 'We should do that again sometime.',
       'html' => '<strong>We should do that again sometime</strong>',
       'attachments' => '2',
-      'attachment1' => stub(:original_filename => 'hello.txt', :read => 'hello world'),
+      'attachment1' => double(:original_filename => 'hello.txt', :read => 'hello world'),
       'attachment2' => {
         :filename => 'bar.txt',
-        :tempfile => stub(:read => 'hullo world')
+        :tempfile => double(:read => 'hullo world')
       }
     }
 
-    @mock_request = stub()
+    @mock_request = double()
     @mock_request.stub(:params).and_return(@params)
   end
 

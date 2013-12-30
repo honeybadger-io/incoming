@@ -24,7 +24,7 @@ describe TestStrategy do
     it 'initializes itself and calls #receive' do
       args = [1, 2, 3]
 
-      object = stub()
+      object = double()
       object.stub(:authenticate).once.and_return(true)
       object.stub(:message).once.and_return('foo')
       object.stub(:receive).with('foo').once
