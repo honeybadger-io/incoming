@@ -36,5 +36,19 @@ describe Incoming::Strategies::SendGrid do
     its('attachments.first.read') { should eq 'hello world' }
     its('attachments.last.filename') { should eq 'bar.txt' }
     its('attachments.last.read') { should eq 'hullo world' }
+
+    context "with base64 Content-Transfer-Encoding" do
+
+      let(:params){
+        {
+          'charsets' => '{"from": "UTF-8", "subject": "UTF-8", "text": "UTF-8", "to": "UTF-8"}',
+          'headers' => ["Content-Transfer-Encoding: base64", "Content-Type: text/plain; charset=UTF-8"].join("\r\n"),
+          'text' => 'We should do that again sometime.',
+          'attachments' => '0',
+        }
+      }
+
+      its('body.decoded') { should eq 'We should do that again sometime.' }
+    end
   end
 end
