@@ -69,7 +69,7 @@ module Incoming
       def authenticate
         api_key = self.class.default_options[:api_key]
 
-        hexdigest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), api_key, [timestamp, token].join)
+        hexdigest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('SHA256'), api_key, [timestamp, token].join)
         hexdigest.eql?(signature) or false
       end
     end

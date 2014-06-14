@@ -17,7 +17,7 @@ module Incoming
       end
 
       def authenticate
-        hexdigest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA256'), self.class.default_options[:secret], [timestamp, token].join)
+        hexdigest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('SHA256'), self.class.default_options[:secret], [timestamp, token].join)
         hexdigest.eql?(signature) or false
       end
     end
