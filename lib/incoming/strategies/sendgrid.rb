@@ -8,7 +8,6 @@ module Incoming
       def initialize(request)
         params = request.params.dup
 
-        # TODO: Properly handle encodings
         encodings = JSON.parse(params['charsets'])
 
         attachments = 1.upto(params['attachments'].to_i).map do |num|
@@ -17,6 +16,8 @@ module Incoming
 
         @message = Mail.new do
           header params['headers']
+          header['Content-Transfer-Encoding'] = nil
+
           if encodings['text'].blank?
             body params['text']
           else

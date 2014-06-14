@@ -1,8 +1,12 @@
 require 'spec_helper'
 
 describe Incoming::Strategies::SendGrid do
-  before do
-    @params = {
+
+  subject { receiver.receive(request) }
+
+  let(:request){ double(params: params) }
+  let(:params){
+    {
       'SPF' => 'pass',
       'charsets' => '{"from": "UTF-8", "subject": "UTF-8", "text": "ISO-8859-1", "to": "UTF-8"}',
       'dkim' => 'none',
@@ -16,25 +20,35 @@ describe Incoming::Strategies::SendGrid do
         :tempfile => double(:read => 'hullo world')
       }
     }
-
-    @mock_request = double()
-    @mock_request.stub(:params).and_return(@params)
-  end
+  }
 
   describe 'message' do
-    subject { receiver.receive(@mock_request) }
 
     it { should be_a Mail::Message }
 
     its('to') { should include 'testing@sendgrid.honeybadger.io' }
     its('from') { should include 'josh@honeybadger.io' }
     its('subject') { should eq 'Matterhorn' }
-    its('body.decoded') { should eq @params['text'] }
-    its('text_part.body.decoded') { should eq @params['text'] }
-    its('html_part.body.decoded') { should eq @params['html'] }
+    its('body.decoded') { should eq 'We should do that again sometime.' }
+    its('text_part.body.decoded') { should eq 'We should do that again sometime.' }
+    its('html_part.body.decoded') { should eq '<strong>We should do that again sometime</strong>' }
     its('attachments.first.filename') { should eq 'hello.txt' }
     its('attachments.first.read') { should eq 'hello world' }
     its('attachments.last.filename') { should eq 'bar.txt' }
     its('attachments.last.read') { should eq 'hullo world' }
+
+    context "with base64 Content-Transfer-Encoding" do
+
+      let(:params){
+        {
+          'charsets' => '{"from": "UTF-8", "subject": "UTF-8", "text": "UTF-8", "to": "UTF-8"}',
+          'headers' => ["Content-Transfer-Encoding: base64", "Content-Type: text/plain; charset=UTF-8"].join("\r\n"),
+          'text' => 'We should do that again sometime.',
+          'attachments' => '0',
+        }
+      }
+
+      its('body.decoded') { should eq 'We should do that again sometime.' }
+    end
   end
 end
