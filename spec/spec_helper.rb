@@ -1,10 +1,10 @@
 require 'rspec'
+require 'rspec/its'
 require 'incoming'
 require 'rack'
 
 RSpec.configure do |c|
   c.mock_with :rspec
-  c.color_enabled = true
   c.tty = true
 
   module Helpers

@@ -28,12 +28,12 @@ describe Incoming::Strategies::HTTPPost do
   it 'returns false from #authenticate when hexidigest is invalid' do
     OpenSSL::HMAC.stub(:hexdigest).and_return('bar')
     http_post = Incoming::Strategies::HTTPPost.new(@mock_request)
-    http_post.authenticate.should be_false
+    http_post.authenticate.should eq(false)
   end
 
   it 'returns true from #authenticate when hexidigest is valid' do
     OpenSSL::HMAC.stub(:hexdigest).and_return('foo')
     http_post = Incoming::Strategies::HTTPPost.new(@mock_request)
-    http_post.authenticate.should be_true
+    http_post.authenticate.should eq(true)
   end
 end

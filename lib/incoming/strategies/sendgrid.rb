@@ -1,4 +1,5 @@
 require 'json'
+require 'mail/utilities'
 
 module Incoming
   module Strategies
@@ -18,7 +19,7 @@ module Incoming
           header params['headers']
           header['Content-Transfer-Encoding'] = nil
 
-          if encodings['text'].blank?
+          if Mail::Utilities.blank?(encodings['text'])
             body params['text']
           else
             body params['text'].force_encoding(encodings['text']).encode('UTF-8')
@@ -26,7 +27,7 @@ module Incoming
 
           html_part do
             content_type 'text/html; charset=UTF-8'
-            if encodings['html'].blank?
+            if Mail::Utilities.blank?(encodings['html'])
               body params['html']
             else
               body params['html'].force_encoding(encodings['html']).encode('UTF-8')

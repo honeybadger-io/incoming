@@ -57,13 +57,13 @@ describe Incoming::Strategies::Mailgun do
   it 'returns false from #authenticate when hexidigest is invalid' do
     OpenSSL::HMAC.stub(:hexdigest).and_return('bar')
     mailgun = receiver.new(@mock_request)
-    mailgun.authenticate.should be_false
+    mailgun.authenticate.should eq(false)
   end
 
   it 'authenticates when hexidigest is valid' do
     OpenSSL::HMAC.stub(:hexdigest).and_return('foo')
     mailgun = receiver.new(@mock_request)
-    mailgun.authenticate.should be_true
+    mailgun.authenticate.should eq(true)
   end
 
   it 'raises an exception when api key is not provided' do
