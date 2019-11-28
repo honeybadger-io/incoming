@@ -24,7 +24,7 @@ Brought to you by :zap: **Honeybadger.io**, painless [Rails exception tracking](
 1. Add Incoming! to your Gemfile and run `bundle install`:
 
     ```ruby
-    gem 'incoming'
+    gem "incoming"
     ```
 
 2. Create a new class to receive emails (see examples below)
@@ -32,7 +32,7 @@ Brought to you by :zap: **Honeybadger.io**, painless [Rails exception tracking](
 3. Implement an HTTP endpoint to receive HTTP post hooks, and pass the
    request to your receiver. (see examples below)
 
-## SendGrid example
+## SendGrid Example
 
 ```ruby
 class EmailReceiver < Incoming::Strategies::SendGrid
@@ -47,11 +47,11 @@ result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com w
 
 [Sendgrid API reference](http://sendgrid.com/docs/API_Reference/Webhooks/parse.html)
 
-## Mailgun example
+## Mailgun Example
 
 ```ruby
 class EmailReceiver < Incoming::Strategies::Mailgun
-  setup :api_key => 'asdf'
+  setup api_key: "asdf"
 
   def receive(mail)
     %(Got message from #{mail.to.first} with subject "#{mail.subject}")
@@ -64,7 +64,7 @@ result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com w
 
 [Mailgun API reference](http://documentation.mailgun.net/user_manual.html#receiving-messages)
 
-## Postmark example
+## Postmark Example
 
 ```ruby
 class EmailReceiver < Incoming::Strategies::Postmark
@@ -79,7 +79,7 @@ result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com w
 
 [Postmark API reference](http://developer.postmarkapp.com/developer-inbound.html)
 
-## CloudMailin example
+## CloudMailin Example
 
 Use the Raw Format when setting up your address target.
 
@@ -96,7 +96,7 @@ result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com w
 
 [CloudMailin API reference](http://docs.cloudmailin.com/http_post_formats/)
 
-## Mandrill example
+## Mandrill Example
 
 Mandrill is capable of sending multiple events in a single webhook, so
 the Mandrill strategy works a bit differently than the others. Namely,
@@ -112,16 +112,16 @@ class EmailReceiver < Incoming::Strategies::Mandrill
 end
 
 req = Rack::Request.new(env)
-result = EmailReceiver.receive(req) # => ['Got message from whoever@wherever.com with subject "hello world"', '...']
+result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com with subject "hello world"
 ```
 
 [Mandrill API reference](http://help.mandrill.com/entries/22092308-What-is-the-format-of-inbound-email-webhooks-)
 
-## Postfix example
+## Postfix Example
 
 ```ruby
 class EmailReceiver < Incoming::Strategies::HTTPPost
-  setup :secret => '6d7e5337a0cd69f52c3fcf9f5af438b1'
+  setup secret: "6d7e5337a0cd69f52c3fcf9f5af438b1"
 
   def receive(mail)
     %(Got message from #{mail.to.first} with subject "#{mail.subject}")
@@ -139,11 +139,11 @@ result = EmailReceiver.receive(req) # => Got message from whoever@wherever.com w
 # /etc/mail/aliases
 http_post: "|http_post -s 6d7e5337a0cd69f52c3fcf9f5af438b1 http://www.example.com/emails"
 ```
-## Qmail example:
+## Qmail Example:
 
 ```ruby
 class EmailReceiver < Incoming::Strategies::HTTPPost
-  setup :secret => '6d7e5337a0cd69f52c3fcf9f5af438b1'
+  setup secret: "6d7e5337a0cd69f52c3fcf9f5af438b1"
 
   def receive(mail)
     %(Got message from #{mail.to.first} with subject "#{mail.subject}")
@@ -172,16 +172,16 @@ example.com:example
 ```
 Now mails to `whoever@example.com` will be posted to the corresponding URL above. To post all mails for `example.com`, just add the above line to `~example/.qmail-default`.
 
-## Example Rails controller
+## Example Rails Controller
 
 ```ruby
 # app/controllers/emails_controller.rb
 class EmailsController < ActionController::Base
   def create
     if EmailReceiver.receive(request)
-      render :json => { :status => 'ok' }
+      render json: { status: "ok" }
     else
-      render :json => { :status => 'rejected' }, :status => 403
+      render json: { status: "rejected" }, status: 403
     end
   end
 end
@@ -190,27 +190,27 @@ end
 ```ruby
 # config/routes.rb
 Rails.application.routes.draw do
-  post '/emails' => 'emails#create'
+  post "/emails" => "emails#create"
 end
 ```
 
 ```ruby
 # spec/controllers/emails_controller_spec.rb
-require 'spec_helper'
+require "spec_helper"
 
-describe EmailsController, '#create' do
-  it 'responds with success when request is valid' do
-    EmailReceiver.should_receive(:receive).and_return(true)
+describe EmailsController, "#create" do
+  it "responds with success when request is valid" do
+    allow(EmailReceiver).to receive(:receive).and_return(true)
     post :create
-    response.should be_success
-    response.body.should eq '{"status":"ok"}'
+    expect(response.success?).to eq(true)
+    expect(response.body).to eq(%({"status":"ok"}))
   end
 
-  it 'responds with 403 when request is invalid' do
-    EmailReceiver.should_receive(:receive).and_return(false)
+  it "responds with 403 when request is invalid" do
+    allow(EmailReceiver).to receive(:receive).and_return(false)
     post :create
-    response.status.should eq 403
-    response.body.should eq '{"status":"rejected"}'
+    expect(response.status).to eq(403)
+    expect(response.body).to eq(%({"status":"rejected"}))
   end
 end
 ```
