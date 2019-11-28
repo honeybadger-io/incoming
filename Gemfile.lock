@@ -21,12 +21,10 @@ GEM
       rspec (~> 2.11)
     listen (0.7.3)
     lumberjack (1.0.2)
-    mail (2.5.4)
-      mime-types (~> 1.16)
-      treetop (~> 1.4.8)
+    mail (2.7.1)
+      mini_mime (>= 0.1.1)
     method_source (0.8.1)
-    mime-types (1.25.1)
-    polyglot (0.3.4)
+    mini_mime (1.0.2)
     pry (0.9.12)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -45,9 +43,6 @@ GEM
     slop (3.4.3)
     terminal-table (1.4.5)
     thor (0.17.0)
-    treetop (1.4.15)
-      polyglot
-      polyglot (>= 0.3.1)
 
 PLATFORMS
   ruby
