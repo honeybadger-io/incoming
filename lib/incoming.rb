@@ -2,7 +2,7 @@ require 'mail'
 require 'incoming/strategy'
 
 module Incoming
-  VERSION = '0.1.8'
+  VERSION = '0.2.0'
 
   module Strategies
     autoload :Mandrill, 'incoming/strategies/mandrill'
