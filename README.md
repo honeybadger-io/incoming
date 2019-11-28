@@ -230,5 +230,5 @@ end
 
 ## License
 
-Incoming! is Copyright 2013 © Joshua Wood and Honeybadger Industries LLC. It is free software, and
-may be redistributed under the terms specified in the MIT-LICENSE file.
+Incoming! is free software, and may be redistributed under the terms specified
+in the MIT-LICENSE file.
