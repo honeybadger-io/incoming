@@ -43,7 +43,7 @@ GEM
       method_source (~> 1.0)
     rack (2.2.2)
     rake (13.0.1)
-    rb-fsevent (0.10.3)
+    rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rspec (3.9.0)
@@ -73,7 +73,7 @@ DEPENDENCIES
   guard-rspec
   incoming!
   rake
-  rb-fsevent (~> 0.9)
+  rb-fsevent (~> 0.10)
   rspec
   rspec-its
 
