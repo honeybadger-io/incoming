@@ -1,0 +1,11 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "09:00"
+    timezone: America/Los_Angeles
+  open-pull-requests-limit: 99
+  assignees:
+  - joshuap
