@@ -43,7 +43,7 @@ GEM
       method_source (~> 1.0)
     rack (2.2.3)
     rake (13.0.6)
-    rb-fsevent (0.11.0)
+    rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rspec (3.10.0)
